@@ -1,8 +1,10 @@
 import * as fs from 'fs-extra'
 import * as path from 'path'
 
+import buildAppComponent from './deploy/buildAppComponent'
 import buildEntryComponentFile from './deploy/buildEntryComponentFile'
-import buildStaticFiles, { buildIndexHtmls, buildPageDatas } from './deploy/buildStaticFiles'
+import buildIndexHtmls from './deploy/buildIndexHtmls'
+import buildPageDatas from './deploy/buildPageDatas'
 import { server } from './deploy/server'
 import { PATH_APP_COMPONENT, PATH_CACHE, PATH_CACHE_ENTRY_COMPONENT } from './paths'
 import { Config, SourcedData, TransformedData, TypeRoute } from './typings'
@@ -18,24 +20,24 @@ export function deploy( transformedData: TransformedData, config: Config ) {
 
   // # create routes
   const routes: TypeRoute[] = pages.map( ( { path, component, data } ) => ( {
-    path         ,
+    path,
     exact        : true,
-    componentName: PATH
-      .basename( component )
-      .replace( new RegExp( `${PATH.extname( component )}$` ), "" ),
+    componentName: PATH.basename( component ).replace(
+      new RegExp( `${PATH.extname( component )}$` ),
+      ""
+    ),
     componentRelativePath: PATH.relative( PATH_CACHE, component ),
-    componentAbsolutePath: component,
+    componentAbsolutePath: component
   } ) )
-  
-
-  // # create static files based on pageInfos
-  buildIndexHtmls( transformedData, config, pages, routes )
-  buildPageDatas( transformedData, config, pages )
-
-  
 
   // # build Entry component file
+  buildAppComponent( routes )
   buildEntryComponentFile( routes )
 
-  server()
+  // # server
+  server().then( () => {
+    // # create static files based on pageInfos
+    buildIndexHtmls( transformedData, config, pages, routes )
+    buildPageDatas( transformedData, config, pages )
+  } )
 }

@@ -8,21 +8,26 @@ import webpackConfig from './webpack.config'
 
 const app = express()
 
-export function server( ) {
+export function server() {
   const PORT = 3600
 
   const options = {
     contentBase: PATH_PUBLIC,
     hot        : false,
-    host       : 'localhost'
+    host       : "localhost"
   }
 
-  
-  webpackDevServer.addDevServerEntrypoints( webpackConfig, options )
-  const compiler = webpack( webpackConfig )
-  const server = new webpackDevServer( compiler, options )
+  return Promise.resolve(
+    new Promise( resolve => {
+      webpackDevServer.addDevServerEntrypoints( webpackConfig, options )
+      const compiler = webpack( webpackConfig )
+      
+      compiler.hooks.done.tap( 'tsblog', resolve )
 
-  server.listen( PORT, 'localhost', () => {
-    console.log( `dev server listening on port ${PORT}` )
-  } )
+      const server = new webpackDevServer( compiler, options )
+      server.listen( PORT, "localhost", () => {
+        console.log( `dev server listening on port ${PORT}` )
+      } )
+    } )
+  )
 }

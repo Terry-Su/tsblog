@@ -7,6 +7,7 @@ const { resolve } = path
 // # .cache
 export const PATH_CACHE = path.resolve( process.cwd(), '.cache' )
 export const PATH_CACHE_ENTRY_COMPONENT = resolve( PATH_CACHE, 'Entry.tsx' ) 
+export const PATH_CACHE_APP_COMPONENT = resolve( PATH_CACHE, 'App.tsx' ) 
 
 // # browser
 export const PATH_BROWSER_COMPONENTS = path.resolve( __dirname, 'browser/components' )

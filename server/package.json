@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "nodemon --watch 'src/**/*' --ignore 'src/__test__/**/*' --verbose -e ts --exec 'ts-node' node_modules/jasmine/bin/jasmine",
+    "start": "nodemon --watch 'src/**/*' --ignore 'src/__test__/**/*' --verbose -e ts,tsx --exec 'ts-node' node_modules/jasmine/bin/jasmine",
     "test": "ts-node node_modules/jasmine/bin/jasmine"
   },
   "devDependencies": {

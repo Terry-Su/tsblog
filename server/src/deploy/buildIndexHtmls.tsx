@@ -4,29 +4,15 @@ import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import Loadable from 'react-loadable'
 import { getBundles } from 'react-loadable/webpack'
-import { matchPath, StaticRouter } from 'react-router-dom'
+import { StaticRouter } from 'react-router-dom'
 
-import Template from '../browser/components/__template__'
 import { NAME_GV_CURRENT_PAGE } from '../constants/names'
-import {
-    PATH_CACHE_ENTRY_COMPONENT, PATH_PUBLIC, PATH_PUBLIC_INDEX_HTML, PATH_PUBLIC_LOADABLE,
-    PATH_PUBLIC_PAGE_DATA
-} from '../paths'
+import { PATH_CACHE_APP_COMPONENT, PATH_PUBLIC, PATH_PUBLIC_LOADABLE } from '../paths'
 import { Config, PageInfo, TransformedData, TypeRoute } from '../typings'
-import createFileNameOfPath from '../utils/createFileNameOfPath'
 
 const { resolve } = path
 
-export default function buildStaticFiles(
-  transformedData: TransformedData,
-  config: Config,
-  routes: TypeRoute[]
-) {
-  // # remarks data(json)
-  // # 123
-}
-
-export function buildIndexHtmls(
+export default function buildIndexHtmls(
   transformedData: TransformedData,
   config: Config,
   pages: PageInfo[],
@@ -52,8 +38,7 @@ window.${NAME_GV_CURRENT_PAGE}={
     // ssr
     let modules = []
     const stats = require(PATH_PUBLIC_LOADABLE)
-    const { App } = require( PATH_CACHE_ENTRY_COMPONENT )
-    console.log( { App } )
+    const App = require( PATH_CACHE_APP_COMPONENT ).default
     const appHtml = 
       ReactDOMServer.renderToString(
         <Loadable.Capture report={moduleName => modules.push(moduleName)}>
@@ -79,19 +64,5 @@ window.${NAME_GV_CURRENT_PAGE}={
 </html>`
 
     fs.outputFileSync(targetPath, text)
-  })
-}
-
-export function buildPageDatas(
-  transformedData: TransformedData,
-  config: Config,
-  pages: PageInfo[]
-) {
-  pages.map(({ path, data }) => {
-    const targetPath = resolve(
-      PATH_PUBLIC_PAGE_DATA,
-      `${createFileNameOfPath(path)}.json`
-    )
-    fs.outputJSONSync(targetPath, data)
   })
 }
