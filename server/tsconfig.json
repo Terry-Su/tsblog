@@ -1,0 +1,22 @@
+{
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    // "baseUrl": ".",
+    // "paths": {
+    //   "@/*": [ "./src/*" ],
+    //   "@typings/*": [ "./src/typings/*" ],
+    // },
+    "module": "commonJS",
+    "target": "es5",
+    "jsx": "react",    
+    "allowJs": true,
+    "sourceMap": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "lib": ["dom", "es2016"],
+    "esModuleInterop": true,
+  },
+}

@@ -1,0 +1,15 @@
+{
+  "include": ["../../src/**/*", "../../.cache/**/*"],
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    "module": "esNext",
+		"target": "es5",
+		"jsx": "react",
+    "allowJs": true,
+    "sourceMap": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "lib": ["dom" ],
+    "esModuleInterop": true
+  }
+}
