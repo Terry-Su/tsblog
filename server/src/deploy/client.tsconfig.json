@@ -2,7 +2,7 @@
   "include": ["../../src/**/*", "../../.cache/**/*"],
   "exclude": ["node_modules"],
   "compilerOptions": {
-    "module": "esNext",
+    "module": "esnext",
 		"target": "es5",
 		"jsx": "react",
     "allowJs": true,

@@ -8,21 +8,21 @@ import {
     PATH_WEBPACK_TSCONFIG
 } from '../paths'
 
-const HtmlWebpackPlugin = require( 'html-webpack-plugin' )
+const HtmlWebpackPlugin = require( "html-webpack-plugin" )
 
 export default {
-  mode  : 'development',
+  mode  : "development",
   // mode  : 'production',
-  entry : PATH_CACHE_ENTRY_COMPONENT, 
+  entry : PATH_CACHE_ENTRY_COMPONENT,
   // [
   //   // 'webpack-hot-middleware/client',
   //   PATH_CACHE_ENTRY_COMPONENT,
   // ],
   output: {
-    filename     : 'bundle.js',
-    chunkFilename: '[name].js',
+    filename     : "bundle.js",
+    chunkFilename: "[name].js",
     path         : PATH_PUBLIC,
-    publicPath   : `/`,
+    publicPath   : `/`
   },
   module: {
     rules: [
@@ -34,10 +34,21 @@ export default {
           configFile: PATH_WEBPACK_TSCONFIG
         }
       },
+      {
+        test: /\.(js|jsx)$/,
+        use : {
+          loader : "babel-loader",
+          options: {
+            presets: [ "@babel/preset-env", "@babel/preset-react" ],
+            plugins: [ "@babel/plugin-proposal-class-properties" ]
+          }
+        },
+        exclude: /node_modules/
+      }
     ]
   },
   resolve: {
-    extensions: [ ".ts", ".tsx", ".js" ]
+    extensions: [ ".ts", ".tsx", ".js", ".jsx" ]
   },
   plugins: [
     // new HtmlWebpackPlugin( {
@@ -56,5 +67,13 @@ export default {
   //     chunks: 'all'
   //   }
   // },
-  devtool: 'inline-source-map',
+  devtool: "inline-source-map"
+  // optimization: {
+  //   splitChunks: {
+  //     cacheGroups: {
+  //       default: false,
+  //       vendors: false
+  //     }
+  //   }
+  // }
 }

@@ -37,7 +37,7 @@ export function deploy( transformedData: TransformedData, config: Config ) {
   // # server
   server().then( () => {
     // # create static files based on pageInfos
-    buildIndexHtmls( transformedData, config, pages, routes )
     buildPageDatas( transformedData, config, pages )
+    buildIndexHtmls( transformedData, config, pages, routes )
   } )
 }

@@ -2,7 +2,8 @@ import fs from 'fs-extra'
 import path from 'path'
 
 import {
-    PATH_APP_COMPONENT, PATH_BROWSER_COMPONENTS, PATH_CACHE, PATH_CACHE_ENTRY_COMPONENT
+    PATH_APP_COMPONENT, PATH_BROWSER_COMPONENTS, PATH_CACHE, PATH_CACHE_ENTRY_COMPONENT,
+    PATH_CACHE_ENTRY_COMPONENT_JSX
 } from '../paths'
 import createFileNameOfPath from '../utils/createFileNameOfPath'
 
@@ -33,13 +34,15 @@ import App from './App'
 
 
 const HotApp = hot( App )
-
-ReactDOM.render(
-  <BrowserRouter>
-    <HotApp />
-  </BrowserRouter>,
-  document.getElementById( 'root' )
+loadable.preloadReady().then( () => 
+  ReactDOM.hydrate(
+    <BrowserRouter>
+      <HotApp />
+    </BrowserRouter>,
+    document.getElementById( 'root' )
+  )
 )
+
 `
   fs.outputFileSync( PATH_CACHE_ENTRY_COMPONENT, text )
 }
