@@ -4,11 +4,8 @@ import webpack from 'webpack'
 import WriteFilePlugin from 'write-file-webpack-plugin'
 
 import {
-    PATH_CACHE_ENTRY_COMPONENT, PATH_INDEX_HTML, PATH_PUBLIC, PATH_PUBLIC_LOADABLE,
-    PATH_WEBPACK_TSCONFIG
+    PATH_CACHE_ENTRY_COMPONENT, PATH_PUBLIC, PATH_PUBLIC_LOADABLE, PATH_WEBPACK_TSCONFIG
 } from '../paths'
-
-const HtmlWebpackPlugin = require( "html-webpack-plugin" )
 
 export default {
   mode  : "development",
@@ -48,14 +45,13 @@ export default {
     ]
   },
   resolve: {
-    extensions: [ ".ts", ".tsx", ".js", ".jsx" ]
+    extensions: [ ".ts", ".tsx", ".js", ".jsx" ],
+    // modules   : [
+    //   PATH_NODE_MODULES,
+    //   'node_modules',
+    // ]
   },
   plugins: [
-    // new HtmlWebpackPlugin( {
-    //   title   : 'App',
-    //   // Load a custom template (lodash by default)
-    //   template: PATH_INDEX_HTML
-    // } )
     // new webpack.HotModuleReplacementPlugin(),
     new WriteFilePlugin(),
     new ReactLoadablePlugin( {

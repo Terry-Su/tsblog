@@ -1,14 +1,17 @@
 import fs from 'fs-extra'
 import path from 'path'
+import React from 'react'
 
 import {
     PATH_APP_COMPONENT, PATH_BROWSER_COMPONENTS, PATH_CACHE, PATH_CACHE_APP_COMPONENT,
-    PATH_CACHE_APP_COMPONENT_JSX, PATH_CACHE_ENTRY_COMPONENT
+    PATH_CACHE_APP_COMPONENT_JSX, PATH_CACHE_ENTRY_COMPONENT, PATH_NODE_MODULES
 } from '../paths'
 import createFileNameOfPath from '../utils/createFileNameOfPath'
 
 export default function buildAppComponent( routes ) {
   const browserComponentsRelativePath = path.relative( PATH_CACHE, PATH_BROWSER_COMPONENTS )
+
+  const nodeModulesRelativePath = path.relative( PATH_CACHE, PATH_NODE_MODULES )
 
   const importing = ( () => {
     let res = []
@@ -30,6 +33,8 @@ import ReactDOM from 'react-dom';
 import { Switch } from 'react-router-dom'
 import { renderRoutes } from 'react-router-config'
 import loadable from 'react-loadable'
+// import loadable from '${nodeModulesRelativePath}/react-loadable/babel'
+// const loadable = require( '${nodeModulesRelativePath}/react-loadable/babel' ).default
 
 const TSLink = loadable({
   loader: () => import('${browserComponentsRelativePath}/TSLink' /* webpackChunkName: "component-TSLink" */),

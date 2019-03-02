@@ -4,6 +4,10 @@ import { NAME_PUBLIC_PAGE_DATA } from './constants/names'
 
 const { resolve } = path
 
+// # node_modules
+export const PATH_NODE_MODULES = path.resolve( __dirname,'../node_modules' )
+export const PATH_TARGET_REACT_LOADABLE = path.resolve( process.cwd(), 'node_modules/react-loadable' )
+
 // # .cache
 export const PATH_CACHE = path.resolve( process.cwd(), '.cache' )
 export const PATH_CACHE_ENTRY_COMPONENT = resolve( PATH_CACHE, 'Entry.tsx' ) 
@@ -30,4 +34,4 @@ export const PATH_APP_COMPONENT = resolve( __dirname, 'deploy/App' )
 export const PATH_INDEX_HTML = resolve( __dirname, 'deploy/index.html' )
 
 // # webpack
-export const PATH_WEBPACK_TSCONFIG = resolve( __dirname, 'deploy/client.tsconfig.json' )
+export const PATH_WEBPACK_TSCONFIG = resolve( __dirname, 'deploy/tsconfig.json' )

@@ -1,6 +1,6 @@
 {
   "include": ["../../src/**/*", "../../.cache/**/*"],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules", "../../src/__test__/**/*"],
   "compilerOptions": {
     "module": "esnext",
 		"target": "es5",
@@ -10,6 +10,6 @@
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "lib": ["dom" ],
-    "esModuleInterop": true
+    "esModuleInterop": true,
   }
 }

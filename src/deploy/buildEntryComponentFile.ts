@@ -1,6 +1,7 @@
 import fs from 'fs-extra'
 import path from 'path'
 
+import { isDev } from '../constants/global'
 import {
     PATH_APP_COMPONENT, PATH_BROWSER_COMPONENTS, PATH_CACHE, PATH_CACHE_ENTRY_COMPONENT,
     PATH_CACHE_ENTRY_COMPONENT_JSX
@@ -35,7 +36,7 @@ import App from './App'
 
 const HotApp = hot( App )
 loadable.preloadReady().then( () => 
-  ReactDOM.hydrate(
+  ReactDOM.${ isDev ? 'render' : 'hydrate' }(
     <BrowserRouter>
       <HotApp />
     </BrowserRouter>,

@@ -16,6 +16,7 @@ export function deploy( transformedData: TransformedData, config: Config ) {
   // ## run 'get pages'
   const pages = getPages( transformedData ) || []
 
+
   // # (Got in config)get home page component
 
   // # create routes
@@ -35,7 +36,7 @@ export function deploy( transformedData: TransformedData, config: Config ) {
   buildEntryComponentFile( routes )
 
   // # server
-  server().then( () => {
+  server( config ).then( () => {
     // # create static files based on pageInfos
     buildPageDatas( transformedData, config, pages )
     buildIndexHtmls( transformedData, config, pages, routes )

@@ -8,10 +8,13 @@ export type Config = {
     home: any
     contents?: Path
     static?: Path
-    getPages?: Function
+    getPages?: Function,
+    setWebpack?: Function,
   }
 
-  siteData?: any
+  siteData?: any,
+
+  port?: number
 }
 
 export interface SourcedData {

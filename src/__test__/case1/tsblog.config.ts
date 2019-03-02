@@ -12,7 +12,9 @@ export default {
     contents: resolve( __dirname, "./contents" ),
     home    : resolve( __dirname, "./src/pages/Home" ),
     getPages
-  }
+  },
+
+  port: 3600
 }
 
 function getPages( transformedData: TransformedData ): PageInfo[] {
