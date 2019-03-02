@@ -5,13 +5,12 @@ import ReactDOMServer from 'react-dom/server'
 // import Loadable from 'react-loadable'
 import { getBundles } from 'react-loadable/webpack'
 import { StaticRouter } from 'react-router-dom'
-import { ServerStyleSheet } from 'styled-components'
 
 import { isDev } from '../constants/global'
 import { NAME_GV_CURRENT_PAGE } from '../constants/names'
 import {
-    PATH_CACHE_APP_COMPONENT, PATH_PUBLIC, PATH_PUBLIC_LOADABLE, PATH_PUBLIC_LOADABLE2,
-    PATH_TARGET_REACT_LOADABLE
+    PATH_CACHE_APP_COMPONENT, PATH_PUBLIC, PATH_PUBLIC_LOADABLE, PATH_TARGET_REACT_LOADABLE,
+    PATH_TARGET_STYLED_COMPONENTS
 } from '../paths'
 import { Config, PageInfo, TransformedData, TypeRoute } from '../typings'
 
@@ -37,6 +36,7 @@ window.${NAME_GV_CURRENT_PAGE}={
     // import App including loadable components
     const App = require(PATH_CACHE_APP_COMPONENT).default
     const Loadable = require( PATH_TARGET_REACT_LOADABLE )
+    const { ServerStyleSheet } = require(PATH_TARGET_STYLED_COMPONENTS)
     // preload all loadable components first
     Loadable.preloadAll().then(() => {
       let modules = []
@@ -61,7 +61,6 @@ window.${NAME_GV_CURRENT_PAGE}={
       )
       const style = sheet.getStyleTags()
 
-      
       const bundles = getBundles(stats, modules)
       let files: string[] = bundles.map(({ file }) => file)
       files = files.filter((file, index) => files.indexOf(file) === index)

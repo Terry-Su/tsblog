@@ -7,6 +7,7 @@ const { resolve } = path
 // # node_modules
 export const PATH_NODE_MODULES = path.resolve( __dirname,'../node_modules' )
 export const PATH_TARGET_REACT_LOADABLE = path.resolve( process.cwd(), 'node_modules/react-loadable' )
+export const PATH_TARGET_STYLED_COMPONENTS = path.resolve( process.cwd(), 'node_modules/styled-components' )
 
 // # .cache
 export const PATH_CACHE = path.resolve( process.cwd(), '.cache' )
@@ -25,7 +26,6 @@ export const PATH_PUBLIC_INDEX_HTML = path.resolve( PATH_PUBLIC, 'index.html' )
 export const PATH_PUBLIC_PAGE_DATA = path.resolve( PATH_PUBLIC, NAME_PUBLIC_PAGE_DATA )
 // ## loadable
 export const PATH_PUBLIC_LOADABLE = path.resolve( PATH_PUBLIC, 'loadable.json' )
-export const PATH_PUBLIC_LOADABLE2 = path.resolve( PATH_PUBLIC, 'loadable-stats.json' )
 
 // # component
 export const PATH_APP_COMPONENT = resolve( __dirname, 'deploy/App' )
