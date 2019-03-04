@@ -10,6 +10,7 @@ export type Config = {
     static?: Path
     getPages?: Function,
     setWebpack?: Function,
+    tsconfigPath?: Path
   }
 
   siteData?: any,

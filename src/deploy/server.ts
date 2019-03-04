@@ -5,7 +5,7 @@ import webpackDevServer from 'webpack-dev-server'
 
 import { PATH_PUBLIC } from '../paths'
 import { Config } from '../typings'
-import webpackConfig from './webpack.config'
+import getWebpackConfig from './webpack.config'
 
 const app = express()
 
@@ -15,10 +15,11 @@ export function server( config: Config ) {
 
   const options = {
     contentBase: PATH_PUBLIC,
-    hot        : false,
+    hot        : true,
     host       : "localhost"
   }
 
+  const webpackConfig = getWebpackConfig( config )
   return Promise.resolve(
     new Promise( resolve => {
       if ( setWebpack ) { setWebpack( webpackConfig ) }

@@ -75,16 +75,19 @@ export default class App extends Component {
 
   render() {
     return (
-      <div>
-        <ul>
-          {browserRoutes.map(({ path, component }, index) => (
-            <li key={index}>
-              <span onMouseOver={ () => this.onLinkMouseover( component ) }>
-                <TSLink to={path}>{path}</TSLink>
-              </span>
-            </li>
-          ))}
-        </ul>
+      <div style={{
+        width: '100%',
+        height: '100%',
+      }}>
+      {/* <ul>
+        {browserRoutes.map(({ path, component }, index) => (
+          <li key={index}>
+            <span onMouseOver={ () => this.onLinkMouseover( component ) }>
+              <TSLink to={path}>{path}</TSLink>
+            </span>
+          </li>
+        ))}
+      </ul> */}
         <Switch>
           {renderRoutes(browserRoutes)}
         </Switch>

@@ -14,7 +14,7 @@ export default function buildPageDatas(
   config: Config,
   pages: PageInfo[]
 ) {
-  pages.map(({ path, data }) => {
+  pages.map(({ path, data = {} }) => {
     const targetPath = resolve(
       PATH_PUBLIC_PAGE_DATA,
       `${createFileNameOfPath(path)}.json`

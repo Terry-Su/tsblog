@@ -20,7 +20,7 @@ export function deploy( transformedData: TransformedData, config: Config ) {
   // # (Got in config)get home page component
 
   // # create routes
-  const routes: TypeRoute[] = pages.map( ( { path, component, data } ) => ( {
+  const routes: TypeRoute[] = pages.map( ( { path, component, data = {} } ) => ( {
     path,
     exact        : true,
     componentName: PATH.basename( component ).replace(

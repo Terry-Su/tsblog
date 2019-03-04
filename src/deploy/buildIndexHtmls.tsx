@@ -60,6 +60,14 @@ window.${NAME_GV_CURRENT_PAGE}={
         </StaticRouter>)
       )
       const style = sheet.getStyleTags()
+      const globalStyle = `<style>
+html,body,#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+      </style>`
 
       const bundles = getBundles(stats, modules)
       let files: string[] = bundles.map(({ file }) => file)
@@ -71,6 +79,7 @@ window.${NAME_GV_CURRENT_PAGE}={
     <meta charset="utf-8"/>
     <title>App</title>
     ${globalScript}
+    ${globalStyle}
     ${style}
   </head>
   <body>

@@ -6,8 +6,9 @@ import WriteFilePlugin from 'write-file-webpack-plugin'
 import {
     PATH_CACHE_ENTRY_COMPONENT, PATH_PUBLIC, PATH_PUBLIC_LOADABLE, PATH_WEBPACK_TSCONFIG
 } from '../paths'
+import { Config } from '../typings'
 
-export default {
+export default ( { entry }: Config ) => ( {
   mode  : "development",
   // mode  : 'production',
   entry : PATH_CACHE_ENTRY_COMPONENT,
@@ -28,7 +29,7 @@ export default {
         loader : "ts-loader",
         exclude: /node_modules/,
         options: {
-          configFile: PATH_WEBPACK_TSCONFIG
+          configFile: entry.tsconfigPath || PATH_WEBPACK_TSCONFIG
         }
       },
       {
@@ -72,4 +73,4 @@ export default {
   //     }
   //   }
   // }
-}
+} )
