@@ -6,6 +6,7 @@ export type Path = string
 export type Config = {
   entry: {
     home: any
+    reduxApp?: Path
     contents?: Path
     static?: Path
     getPages?: Function,

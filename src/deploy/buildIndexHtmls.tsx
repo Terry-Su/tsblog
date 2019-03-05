@@ -10,7 +10,7 @@ import { isDev } from '../constants/global'
 import { NAME_GV_CURRENT_PAGE } from '../constants/names'
 import {
     PATH_CACHE_APP_COMPONENT, PATH_PUBLIC, PATH_PUBLIC_LOADABLE, PATH_TARGET_REACT_LOADABLE,
-    PATH_TARGET_STYLED_COMPONENTS
+    PATH_TARGET_REACT_REDUX, PATH_TARGET_REDUX, PATH_TARGET_STYLED_COMPONENTS
 } from '../paths'
 import { Config, PageInfo, TransformedData, TypeRoute } from '../typings'
 
@@ -24,41 +24,62 @@ export default function buildIndexHtmls(
 ) {
   pages.map(({ path, data }) => {
     const targetPath = resolve(PATH_PUBLIC, `.${path}/index.html`)
+
+    const { reduxApp } = config.entry
+    const useRedux = !!reduxApp
+    const reducer = useRedux ? require(reduxApp).default : {}
+    const windowData = {
+      [NAME_GV_CURRENT_PAGE]: {
+        path,
+        data
+      }
+    }
     const globalScript = `
 <script>
-window.${NAME_GV_CURRENT_PAGE}={
-  path: '${path}',
-  data: ${JSON.stringify(data)}
+${
+  Object.keys( windowData ).map( key => 
+`
+window.${key}=${ JSON.stringify(windowData[ key ], null, "  ") }
+` )
 }
 </script>
 `
     // ssr
     // import App including loadable components
     const App = require(PATH_CACHE_APP_COMPONENT).default
-    const Loadable = require( PATH_TARGET_REACT_LOADABLE )
+    const Loadable = require(PATH_TARGET_REACT_LOADABLE)
     const { ServerStyleSheet } = require(PATH_TARGET_STYLED_COMPONENTS)
+    const { createStore } = require(PATH_TARGET_REDUX)
+    const { Provider } = require(PATH_TARGET_REACT_REDUX)
     // preload all loadable components first
     Loadable.preloadAll().then(() => {
       let modules = []
       const stats = require(PATH_PUBLIC_LOADABLE)
 
       // set window variable
-      global["window"] = {
-        [NAME_GV_CURRENT_PAGE]: {
-          path,
-          data
-        }
-      }
+      global["window"] = windowData
 
       const sheet = new ServerStyleSheet()
 
-      const appHtml = ReactDOMServer.renderToString(
-        sheet.collectStyles(<StaticRouter location={path} context={{}}>
+      const main = (
+        <StaticRouter location={path} context={{}}>
           <Loadable.Capture report={moduleName => modules.push(moduleName)}>
             <App />
           </Loadable.Capture>
-        </StaticRouter>)
+        </StaticRouter>
       )
+
+      const appHtml = isDev
+        ? ""
+        : ReactDOMServer.renderToString(
+            sheet.collectStyles(
+              useRedux ? (
+                <Provider store={createStore(reducer)}>{main}</Provider>
+              ) : (
+                main
+              )
+            )
+          )
       const style = sheet.getStyleTags()
       const globalStyle = `<style>
 html,body,#root {
@@ -83,7 +104,7 @@ html,body,#root {
     ${style}
   </head>
   <body>
-    <div id="root">${ isDev ? '' : appHtml}</div>
+    <div id="root">${isDev ? "" : appHtml}</div>
     ${files
       .map(file => {
         return `<script src="/${file}"></script>`

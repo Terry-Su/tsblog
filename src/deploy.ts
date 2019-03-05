@@ -33,7 +33,7 @@ export function deploy( transformedData: TransformedData, config: Config ) {
 
   // # build Entry component file
   buildAppComponent( routes )
-  buildEntryComponentFile( routes )
+  buildEntryComponentFile( routes, config )
 
   // # server
   server( config ).then( () => {

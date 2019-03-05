@@ -1,4 +1,4 @@
-export const NAME_GV_CURRENT_PAGE = 'GV_CURRENT_PAGE'
+export const NAME_GV_CURRENT_PAGE = 'CURRENT_PAGE'
 
 
 // # public

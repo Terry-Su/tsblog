@@ -8,6 +8,8 @@ const { resolve } = path
 export const PATH_NODE_MODULES = path.resolve( __dirname,'../node_modules' )
 export const PATH_TARGET_REACT_LOADABLE = path.resolve( process.cwd(), 'node_modules/react-loadable' )
 export const PATH_TARGET_STYLED_COMPONENTS = path.resolve( process.cwd(), 'node_modules/styled-components' )
+export const PATH_TARGET_REDUX = path.resolve( process.cwd(), 'node_modules/redux' )
+export const PATH_TARGET_REACT_REDUX = path.resolve( process.cwd(), 'node_modules/react-redux' )
 
 // # .cache
 export const PATH_CACHE = path.resolve( process.cwd(), '.cache' )
