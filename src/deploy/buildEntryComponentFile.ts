@@ -3,31 +3,12 @@ import path from 'path'
 
 import { isDev } from '../constants/global'
 import {
-    PATH_APP_COMPONENT, PATH_BROWSER_COMPONENTS, PATH_CACHE, PATH_CACHE_ENTRY_COMPONENT,
-    PATH_CACHE_ENTRY_COMPONENT_JSX
+    PATH_APP_COMPONENT, PATH_BROWSER_COMPONENTS, PATH_CACHE, PATH_CACHE_ENTRY_COMPONENT
 } from '../paths'
 import { Config } from '../typings'
 import createFileNameOfPath from '../utils/createFileNameOfPath'
 
 export default function buildEntryComponentFile( routes, config: Config ) {
-  const browserComponentsRelativePath = path.relative(
-    PATH_CACHE,
-    PATH_BROWSER_COMPONENTS
-  )
-
-  const importing = ( () => {
-    let res = []
-    let relativePaths = []
-
-    routes.map( ( { componentName, componentRelativePath, path } ) => {
-      if ( !relativePaths.includes( componentRelativePath ) ) {
-        relativePaths.push( componentRelativePath )
-        res.push( { componentName, componentRelativePath, path } )
-      }
-    } )
-    return res
-  } )()
-
   const { reduxApp } = config.entry
   const enableRedux = !!reduxApp
   const relativeReduxApp = path.relative( PATH_CACHE, reduxApp )

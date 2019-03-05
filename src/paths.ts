@@ -14,12 +14,15 @@ export const PATH_TARGET_REACT_REDUX = path.resolve( process.cwd(), 'node_module
 // # .cache
 export const PATH_CACHE = path.resolve( process.cwd(), '.cache' )
 export const PATH_CACHE_ENTRY_COMPONENT = resolve( PATH_CACHE, 'Entry.tsx' ) 
-export const PATH_CACHE_ENTRY_COMPONENT_JSX = resolve( PATH_CACHE, 'Entry.jsx' ) 
 export const PATH_CACHE_APP_COMPONENT = resolve( PATH_CACHE, 'App.tsx' ) 
-export const PATH_CACHE_APP_COMPONENT_JSX = resolve( PATH_CACHE, 'App.jsx' ) 
+export const PATH_CACHE_TSLINK_COMPONENT = resolve( PATH_CACHE, 'TSLink.tsx' ) 
+
 
 // # browser
 export const PATH_BROWSER_COMPONENTS = path.resolve( __dirname, 'browser/components' )
+
+// # util
+export const PATH_UTIL = path.resolve( __dirname, 'utils' )
 
 
 // # public

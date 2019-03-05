@@ -5,6 +5,7 @@ import buildAppComponent from './deploy/buildAppComponent'
 import buildEntryComponentFile from './deploy/buildEntryComponentFile'
 import buildIndexHtmls from './deploy/buildIndexHtmls'
 import buildPageDatas from './deploy/buildPageDatas'
+import buildTSLinkComponent from './deploy/buildTSLinkComponent'
 import { server } from './deploy/server'
 import { PATH_APP_COMPONENT, PATH_CACHE, PATH_CACHE_ENTRY_COMPONENT } from './paths'
 import { Config, SourcedData, TransformedData, TypeRoute } from './typings'
@@ -21,7 +22,7 @@ export function deploy( transformedData: TransformedData, config: Config ) {
 
   // # create routes
   const routes: TypeRoute[] = pages.map( ( { path, component, data = {} } ) => ( {
-    path,
+    path         : `${path}`,
     exact        : true,
     componentName: PATH.basename( component ).replace(
       new RegExp( `${PATH.extname( component )}$` ),
@@ -32,6 +33,7 @@ export function deploy( transformedData: TransformedData, config: Config ) {
   } ) )
 
   // # build Entry component file
+  buildTSLinkComponent( routes, config )
   buildAppComponent( routes )
   buildEntryComponentFile( routes, config )
 

@@ -4,7 +4,8 @@ import webpack from 'webpack'
 import WriteFilePlugin from 'write-file-webpack-plugin'
 
 import {
-    PATH_CACHE_ENTRY_COMPONENT, PATH_PUBLIC, PATH_PUBLIC_LOADABLE, PATH_WEBPACK_TSCONFIG
+    PATH_CACHE_ENTRY_COMPONENT, PATH_NODE_MODULES, PATH_PUBLIC, PATH_PUBLIC_LOADABLE,
+    PATH_WEBPACK_TSCONFIG
 } from '../paths'
 import { Config } from '../typings'
 
@@ -48,8 +49,8 @@ export default ( { entry }: Config ) => ( {
   resolve: {
     extensions: [ ".ts", ".tsx", ".js", ".jsx" ],
     // modules   : [
-    //   PATH_NODE_MODULES,
-    //   'node_modules',
+      // PATH_NODE_MODULES,
+      // 'node_modules',
     // ]
   },
   plugins: [
