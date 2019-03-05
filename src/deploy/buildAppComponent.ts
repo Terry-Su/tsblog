@@ -39,7 +39,7 @@ import loadable from 'react-loadable'
 
 const TSLink = loadable({
   loader: () => import('./TSLink' /* webpackChunkName: "component-TSLink" */),
-  loading: () => <span>Loading</span>,
+  loading: () => <span></span>,
   modules: ['./TSLink'],
   webpack: () => [(require as any).resolveWeak('./TSLink')],
 });
@@ -51,7 +51,7 @@ ${importing
     ( { componentName, componentRelativePath, path } ) =>
       `const ${componentName} = loadable({
         loader: () => import('${componentRelativePath}' /* webpackChunkName: "component-${createFileNameOfPath( path )}-${componentName}" */),
-        loading: () => <span>Loading</span>,
+        loading: () => <span></span>,
         modules: ['${componentRelativePath}'],
         webpack: () => [(require as any).resolveWeak('${componentRelativePath}')],
       });
