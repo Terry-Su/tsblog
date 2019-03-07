@@ -5,6 +5,7 @@ import ReactDOMServer from 'react-dom/server'
 // import Loadable from 'react-loadable'
 import { getBundles } from 'react-loadable/webpack'
 import { StaticRouter } from 'react-router-dom'
+import serializeJavascript from 'serialize-javascript'
 
 import { isDev } from '../constants/global'
 import { NAME_GV_CURRENT_PAGE } from '../constants/names'
@@ -39,7 +40,7 @@ export default function buildIndexHtmls(
 ${
   Object.keys( windowData ).map( key => 
 `
-window.${key}=${ JSON.stringify(windowData[ key ], null, "  ") }
+window.${key}=${ serializeJavascript(windowData[ key ]) }
 ` )
 }
 </script>

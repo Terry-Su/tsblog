@@ -37,7 +37,7 @@ function transformRemarks(
     const getInfo = () => {
       const text = fs.readFileSync( path, { encoding: "utf8" } )
       const converter = new showdown.Converter( { metadata: true } )
-      const html = converter.makeHtml( text )      
+      const html = converter.makeHtml( text )
       return { converter, html }
     }
 
@@ -63,7 +63,7 @@ function transformYamls(
   const res = yamls.map( ( { path } ) => {
     const extRegexp = new RegExp( `${PATH.extname( path )}$` )
     const relativePath = PATH.relative( contents, path ).replace( extRegexp, "" )
-    
+
     const getData = () => {
       const text = fs.readFileSync( path, { encoding: "utf8" } )
       return yaml.safeLoad( text )
