@@ -27,12 +27,12 @@ function getPages( transformedData: TransformedData ): PageInfo[] {
       siteData
     }
   }
-  const remarkPageInfos = remarks.map( ( { relativePath, metadata, text } ) => ( {
+  const remarkPageInfos = remarks.map( ( { relativePath, getMetadata, getText } ) => ( {
     path     : `/${ relativePath }`,
     component: resolve( __dirname, "./src/template/RemarkTemplate" ),
     data     : {
-      text,
-      metadata
+      text    : getText(),
+      metadata: getMetadata()
     }
   } ) )
   return [

@@ -11,4 +11,5 @@
   "prettier.eslintIntegration": true,
   "importSorter.generalConfiguration.sortOnBeforeSave": true,
   "importSorter.importStringConfiguration.hasSemicolon": false,
+  "typescript.suggest.autoImports": false
 }

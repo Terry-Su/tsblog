@@ -31,16 +31,24 @@ function transformRemarks(
   const { remarks } = sourcedData
 
   const res = remarks.map( ( { path } ) => {
-    const text = fs.readFileSync( path, { encoding: "utf8" } )
-    const extRegexp = new RegExp( `${ PATH.extname( path ) }$` )
-    const relativePath = PATH.relative( contents, path ).replace( extRegexp, '' )
-    const converter = new showdown.Converter( { metadata: true } )
-    const html = converter.makeHtml( text )
-    const metadata = converter.getMetadata()
+    const extRegexp = new RegExp( `${PATH.extname( path )}$` )
+    const relativePath = PATH.relative( contents, path ).replace( extRegexp, "" )
+
+    const getInfo = () => {
+      const text = fs.readFileSync( path, { encoding: "utf8" } )
+      const converter = new showdown.Converter( { metadata: true } )
+      const html = converter.makeHtml( text )      
+      return { converter, html }
+    }
+
+    const getText = () => {
+      return getInfo().html
+    }
+    const getMetadata = () => getInfo().converter.getMetadata()
     return {
-      text: html,
       relativePath,
-      metadata
+      getText,
+      getMetadata
     }
   } )
   return res
@@ -53,13 +61,16 @@ function transformYamls(
   const { contents } = config.entry
   const { yamls } = sourcedData
   const res = yamls.map( ( { path } ) => {
-    const extRegexp = new RegExp( `${ PATH.extname( path ) }$` )
-    const relativePath = PATH.relative( contents, path ).replace( extRegexp, '' )
-    const text = fs.readFileSync( path, { encoding: "utf8" } )
-    const data = yaml.safeLoad( text )
+    const extRegexp = new RegExp( `${PATH.extname( path )}$` )
+    const relativePath = PATH.relative( contents, path ).replace( extRegexp, "" )
+    
+    const getData = () => {
+      const text = fs.readFileSync( path, { encoding: "utf8" } )
+      return yaml.safeLoad( text )
+    }
     return {
       relativePath,
-      data
+      getData
     }
   } )
   return res

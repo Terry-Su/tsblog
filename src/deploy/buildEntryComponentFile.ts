@@ -11,7 +11,6 @@ import createFileNameOfPath from '../utils/createFileNameOfPath'
 export default function buildEntryComponentFile( routes, config: Config ) {
   const { reduxApp } = config.entry
   const enableRedux = !!reduxApp
-  const relativeReduxApp = path.relative( PATH_CACHE, reduxApp )
 
   const text = `import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
@@ -22,7 +21,7 @@ import App from './App'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 ${enableRedux ? `
-import reducer from '${ relativeReduxApp }'
+import reducer from '${ path.relative( PATH_CACHE, reduxApp ) }'
 
 const reduxStore = createStore( reducer )
 ` : ""}

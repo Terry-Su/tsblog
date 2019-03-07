@@ -37,16 +37,16 @@ export interface TransformedData extends Omit<SourcedData, 'remarks' | 'yamls'> 
 
 export interface TransformedTextFile {
   relativePath: string,
-  text: string,
+  getText: Function
 }
 
 export interface TransformedMarkdownFile extends TransformedTextFile {
-  metadata: any
+  getMetadata: Function
 }
 
 export interface TransformedYamlFile {
   relativePath: any
-  data: any
+  getData: Function
 }
 
 
