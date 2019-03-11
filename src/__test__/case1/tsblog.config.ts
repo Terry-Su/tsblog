@@ -9,9 +9,10 @@ export default {
     title: 'TSBLOG'
   },
   entry: {
-    contents: resolve( __dirname, "./contents" ),
-    home    : resolve( __dirname, "./src/pages/Home" ),
-    getPages
+    contents    : resolve( __dirname, "./contents" ),
+    home        : resolve( __dirname, "./src/pages/Home" ),
+    getPages,
+    dotDirectory: true
   },
 
   port: 3601

@@ -6,16 +6,22 @@ export type ConfigParser = {
   ".md": Function
 }
 
-export type Config = {
-  entry: {
-    home: any
+export type ConfigEntry = {
+  home: any
     reduxApp?: Path
     contents?: Path
     static?: Path
     getPages?: Function
     setWebpack?: Function
     tsconfigPath?: Path
-  }
+    // whether source files whose names start with '.'
+    dotFile?: boolean
+    // whether source directories whose names start with '.'
+    dotDirectory?: boolean
+}
+
+export type Config = {
+  entry: ConfigEntry
 
   siteData?: any
 
