@@ -12,7 +12,7 @@ export default {
     contents    : resolve( __dirname, "./contents" ),
     home        : resolve( __dirname, "./src/pages/Home" ),
     getPages,
-    dotDirectory: true
+    dotDirectory: false
   },
 
   port: 3601
