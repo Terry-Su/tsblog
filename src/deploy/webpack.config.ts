@@ -4,19 +4,13 @@ import webpack from 'webpack'
 import WriteFilePlugin from 'write-file-webpack-plugin'
 
 import {
-    PATH_CACHE_ENTRY_COMPONENT, PATH_NODE_MODULES, PATH_PUBLIC, PATH_PUBLIC_LOADABLE,
-    PATH_WEBPACK_TSCONFIG
+    PATH_CACHE_ENTRY_COMPONENT, PATH_PUBLIC, PATH_PUBLIC_LOADABLE, PATH_WEBPACK_TSCONFIG
 } from '../paths'
 import { Config } from '../typings'
 
 export default ( { entry }: Config ) => ( {
   mode  : "development",
-  // mode  : 'production',
   entry : PATH_CACHE_ENTRY_COMPONENT,
-  // [
-  //   // 'webpack-hot-middleware/client',
-  //   PATH_CACHE_ENTRY_COMPONENT,
-  // ],
   output: {
     filename     : "bundle.js",
     chunkFilename: "[name].js",

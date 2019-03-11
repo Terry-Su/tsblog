@@ -3,6 +3,10 @@ type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
 
 export type Path = string
 
+export type ConfigParser = {
+  ".md": string
+}
+
 export type Config = {
   entry: {
     home: any
@@ -16,7 +20,9 @@ export type Config = {
 
   siteData?: any,
 
-  port?: number
+  port?: number,
+
+  parser?: ConfigParser
 }
 
 export interface SourcedData {

@@ -8,6 +8,8 @@ import {
     TransformedYamlFile
 } from './typings'
 
+const yamlParser = text => yaml.safeLoad( text )
+
 const { resolve } = PATH
 // import remark from 'remark'
 const remark = require( "remark" )
@@ -29,22 +31,29 @@ function transformRemarks(
 ): TransformedMarkdownFile[] {
   const { contents } = config.entry
   const { remarks } = sourcedData
+  const { parser: configParser = {} } = config
+  const defaultParser = text => {
+    const converter = new showdown.Converter( { metadata: true } )
+    const html = converter.makeHtml( text )
+    return html
+  }
+  const parser = configParser[ ".md" ] || defaultParser
+  const remarkYamlParser = text => {
+    const converter = new showdown.Converter( { metadata: true } )
+    converter.makeHtml( text )
+    return converter.getMetadata()
+  }
 
   const res = remarks.map( ( { path } ) => {
     const extRegexp = new RegExp( `${PATH.extname( path )}$` )
     const relativePath = PATH.relative( contents, path ).replace( extRegexp, "" )
 
-    const getInfo = () => {
-      const text = fs.readFileSync( path, { encoding: "utf8" } )
-      const converter = new showdown.Converter( { metadata: true } )
-      const html = converter.makeHtml( text )
-      return { converter, html }
-    }
+    const text = fs.readFileSync( path, { encoding: "utf8" } )
 
     const getText = () => {
-      return getInfo().html
+      return parser( text )
     }
-    const getMetadata = () => getInfo().converter.getMetadata()
+    const getMetadata = () => remarkYamlParser( text )
     return {
       relativePath,
       getText,
@@ -66,7 +75,7 @@ function transformYamls(
 
     const getData = () => {
       const text = fs.readFileSync( path, { encoding: "utf8" } )
-      return yaml.safeLoad( text )
+      return yamlParser( text )
     }
     return {
       relativePath,

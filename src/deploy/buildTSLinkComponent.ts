@@ -20,6 +20,8 @@ export default withRouter (
     to: string
     children?: any
     history?: any
+    className?: any
+    style?: any
   }> {
     onClick = e => {
       e.preventDefault()
@@ -34,8 +36,8 @@ export default withRouter (
       } )
     }
     render() {
-      const { children, to } = this.props
-      return <a onClick={ this.onClick } href={ to }>
+      const { children, to, className, style } = this.props
+      return <a onClick={ this.onClick } href={ to } className={className} style={style} >
         { ...children }
       </a>
     }

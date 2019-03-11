@@ -7,15 +7,13 @@ import { PATH_PUBLIC } from '../paths'
 import { Config } from '../typings'
 import getWebpackConfig from './webpack.config'
 
-const app = express()
-
 export function server( config: Config ) {
   const { port = 8080, entry } = config
   const { setWebpack } = entry
 
   const options = {
     contentBase: PATH_PUBLIC,
-    hot        : true,
+    hot        : false,
     host       : "localhost"
   }
 
