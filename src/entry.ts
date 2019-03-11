@@ -7,9 +7,12 @@ import { transformData } from './transformData'
 import { Config, Path } from './typings/index'
 
 export async function run( config: Config ) {
-  const sourcedData = sourceData( config )
-  const transformedData = await transformData( sourcedData, config )
-  deploy( transformedData, config )
+  const getSourcedData = () => sourceData( config )
+  const getTransformedData = async () => {
+    const sourcedData = getSourcedData()
+    return await transformData( sourcedData, config )
+  }
+  deploy( getTransformedData, config )
 }
 
 

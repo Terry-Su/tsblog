@@ -7,7 +7,6 @@ export default class RemarkTemplate extends Component {
     const { metadata, text } = window[ NAME_GV_CURRENT_PAGE ].data
     return <div>
       <h1>{ metadata.title }</h1>
-      <hr />
       <div dangerouslySetInnerHTML={{
         __html: text
       }}></div>

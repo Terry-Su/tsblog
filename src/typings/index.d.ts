@@ -1,10 +1,9 @@
-
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
 
 export type Path = string
 
 export type ConfigParser = {
-  ".md": string
+  ".md": Function
 }
 
 export type Config = {
@@ -13,14 +12,14 @@ export type Config = {
     reduxApp?: Path
     contents?: Path
     static?: Path
-    getPages?: Function,
-    setWebpack?: Function,
+    getPages?: Function
+    setWebpack?: Function
     tsconfigPath?: Path
   }
 
-  siteData?: any,
+  siteData?: any
 
-  port?: number,
+  port?: number
 
   parser?: ConfigParser
 }
@@ -35,14 +34,14 @@ export type SourcedDataTextFile = {
   path: string
 }
 
-
-export interface TransformedData extends Omit<SourcedData, 'remarks' | 'yamls'> {
-  remarks: TransformedMarkdownFile[],
+export interface TransformedData
+  extends Omit<SourcedData, "remarks" | "yamls"> {
+  remarks: TransformedMarkdownFile[]
   yamls: TransformedYamlFile[]
 }
 
 export interface TransformedTextFile {
-  relativePath: string,
+  relativePath: string
   getText: Function
 }
 
@@ -55,15 +54,11 @@ export interface TransformedYamlFile {
   getData: Function
 }
 
-
-
 export interface PageInfo {
   path: string
   component: string
   data?: any
 }
-
-
 
 // # route
 export type TypeRoute = {

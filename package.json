@@ -1,8 +1,17 @@
 {
   "scripts": {
-    "start": "cross-env DEV=true nodemon --watch 'src/**/*' --ignore 'src/__test__/**/*' --verbose -e ts,tsx --exec 'ts-node' node_modules/jasmine/bin/jasmine",
-    "build": "nodemon --watch 'src/**/*' --ignore 'src/__test__/**/*' --verbose -e ts,tsx --exec 'ts-node' node_modules/jasmine/bin/jasmine",
+    "start": "cross-env DEV=true nodemon --verbose -e ts,tsx",
+    "build": "nodemon --verbose -e ts,tsx",
     "test": "ts-node node_modules/jasmine/bin/jasmine"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "src/**/*"
+    ],
+    "ignore": [
+      "src/__test__/**/*"
+    ],
+    "exec": "ts-node node_modules/jasmine/bin/jasmine"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",
