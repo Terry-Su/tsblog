@@ -26,7 +26,7 @@ export default function buildIndexHtmls(
   pages.map(({ path, data }) => {
     const targetPath = resolve(PATH_PUBLIC, `.${path}/index.html`)
 
-    const { reduxApp } = config.entry
+    const { reduxApp, title = '' } = config.entry
     const useRedux = !!reduxApp
     const reducer = useRedux ? require(reduxApp).default : {}
     const windowData = {
@@ -40,13 +40,21 @@ export default function buildIndexHtmls(
 ${
   Object.keys( windowData ).map( key => 
 `
-window.${key}=${ serializeJavascript(windowData[ key ]) }
+window.${key}=${ serializeJavascript(windowData[ key ], {unsafe: true}) }
 ` )
 }
 </script>
 `
     // ssr
     // import App including loadable components
+    // set window variable
+    global["window"] = windowData
+    global["document"] = {
+      body: {
+        getBoundingClientRect: () => ({})
+      }
+    }
+    
     const App = require(PATH_CACHE_APP_COMPONENT).default
     const Loadable = require(PATH_TARGET_REACT_LOADABLE)
     const { ServerStyleSheet } = require(PATH_TARGET_STYLED_COMPONENTS)
@@ -56,9 +64,6 @@ window.${key}=${ serializeJavascript(windowData[ key ]) }
     Loadable.preloadAll().then(() => {
       let modules = []
       const stats = require(PATH_PUBLIC_LOADABLE)
-
-      // set window variable
-      global["window"] = windowData
 
       const sheet = new ServerStyleSheet()
 
@@ -99,7 +104,7 @@ html,body,#root {
 <html>
   <head>
     <meta charset="utf-8"/>
-    <title>App</title>
+    <title>${title}</title>
     ${globalScript}
     ${globalStyle}
     ${style}

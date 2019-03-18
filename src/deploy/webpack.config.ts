@@ -3,13 +3,14 @@ import { ReactLoadablePlugin } from 'react-loadable/webpack'
 import webpack from 'webpack'
 import WriteFilePlugin from 'write-file-webpack-plugin'
 
+import { isDev } from '../constants/global'
 import {
     PATH_CACHE_ENTRY_COMPONENT, PATH_PUBLIC, PATH_PUBLIC_LOADABLE, PATH_WEBPACK_TSCONFIG
 } from '../paths'
 import { Config } from '../typings'
 
 export default ( { entry }: Config ) => ( {
-  mode  : "development",
+  mode  : isDev ? "development" : "production",
   entry : PATH_CACHE_ENTRY_COMPONENT,
   output: {
     filename     : "bundle.js",
@@ -34,17 +35,17 @@ export default ( { entry }: Config ) => ( {
           options: {
             presets: [ "@babel/preset-env", "@babel/preset-react" ],
             plugins: [ "@babel/plugin-proposal-class-properties" ]
-          }
+          },
         },
         exclude: /node_modules/
       }
     ]
   },
   resolve: {
-    extensions: [ ".ts", ".tsx", ".js", ".jsx" ],
+    extensions: [ ".ts", ".tsx", ".js", ".jsx" ]
     // modules   : [
-      // PATH_NODE_MODULES,
-      // 'node_modules',
+    // PATH_NODE_MODULES,
+    // 'node_modules',
     // ]
   },
   plugins: [
@@ -52,7 +53,7 @@ export default ( { entry }: Config ) => ( {
     new WriteFilePlugin(),
     new ReactLoadablePlugin( {
       filename: PATH_PUBLIC_LOADABLE
-    } ),
+    } )
   ],
   // optimization: {
   //   splitChunks: {

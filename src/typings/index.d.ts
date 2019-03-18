@@ -7,7 +7,8 @@ export type ConfigParser = {
 }
 
 export type ConfigEntry = {
-  home: any
+    title: string,
+    home: any
     reduxApp?: Path
     contents?: Path
     static?: Path

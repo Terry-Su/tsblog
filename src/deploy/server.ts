@@ -28,7 +28,7 @@ export function server( config: Config ) {
 
       const server = new webpackDevServer( compiler, options )
       server.listen( port, "localhost", () => {
-        console.log( `dev server listening on port ${port}` )
+        console.log( `dev server: http://localhost:${port}` )
       } )
     } )
   )
