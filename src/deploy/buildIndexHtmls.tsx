@@ -54,7 +54,8 @@ window.${key}=${ serializeJavascript(windowData[ key ], {unsafe: true}) }
         getBoundingClientRect: () => ({})
       }
     }
-    
+    global["location"] = undefined
+
     const App = require(PATH_CACHE_APP_COMPONENT).default
     const Loadable = require(PATH_TARGET_REACT_LOADABLE)
     const { ServerStyleSheet } = require(PATH_TARGET_STYLED_COMPONENTS)
