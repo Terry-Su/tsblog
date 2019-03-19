@@ -7,8 +7,8 @@ import { getBundles } from 'react-loadable/webpack'
 import { StaticRouter } from 'react-router-dom'
 import serializeJavascript from 'serialize-javascript'
 
-import { isDev } from '../constants/global'
 import { NAME_GV_CURRENT_PAGE } from '../constants/names'
+import { __DEV__ } from '../global'
 import {
     PATH_CACHE_APP_COMPONENT, PATH_PUBLIC, PATH_PUBLIC_LOADABLE, PATH_TARGET_REACT_LOADABLE,
     PATH_TARGET_REACT_REDUX, PATH_TARGET_REDUX, PATH_TARGET_STYLED_COMPONENTS
@@ -17,18 +17,16 @@ import { Config, PageInfo, TransformedData, TypeRoute } from '../typings'
 
 const { resolve } = path
 
-export default function buildIndexHtmls(
+export default async function buildIndexHtmls(
   transformedData: TransformedData,
   config: Config,
   pages: PageInfo[],
   routes: TypeRoute[]
 ) {
-  pages.map(({ path, data }) => {
+  for (const { path, data } of pages) {
+    // pages.map(({ path, data }) => {
     const targetPath = resolve(PATH_PUBLIC, `.${path}/index.html`)
 
-    const { reduxApp, title = '' } = config.entry
-    const useRedux = !!reduxApp
-    const reducer = useRedux ? require(reduxApp).default : {}
     const windowData = {
       [NAME_GV_CURRENT_PAGE]: {
         path,
@@ -37,17 +35,17 @@ export default function buildIndexHtmls(
     }
     const globalScript = `
 <script>
-${
-  Object.keys( windowData ).map( key => 
+${Object.keys(windowData).map(
+  key =>
+    `
+window.${key}=${serializeJavascript(windowData[key], { unsafe: true })}
 `
-window.${key}=${ serializeJavascript(windowData[ key ], {unsafe: true}) }
-` )
-}
+)}
 </script>
 `
     // ssr
     // import App including loadable components
-    // set window variable
+    // set window variables
     global["window"] = windowData
     global["document"] = {
       body: {
@@ -56,13 +54,17 @@ window.${key}=${ serializeJavascript(windowData[ key ], {unsafe: true}) }
     }
     global["location"] = undefined
 
+    const { reduxApp, title = "" } = config.entry
+    const useRedux = !!reduxApp
+    const reducer = useRedux ? require(reduxApp).default : {}
+
     const App = require(PATH_CACHE_APP_COMPONENT).default
     const Loadable = require(PATH_TARGET_REACT_LOADABLE)
     const { ServerStyleSheet } = require(PATH_TARGET_STYLED_COMPONENTS)
     const { createStore } = require(PATH_TARGET_REDUX)
     const { Provider } = require(PATH_TARGET_REACT_REDUX)
     // preload all loadable components first
-    Loadable.preloadAll().then(() => {
+    await Loadable.preloadAll().then(() => {
       let modules = []
       const stats = require(PATH_PUBLIC_LOADABLE)
 
@@ -76,7 +78,7 @@ window.${key}=${ serializeJavascript(windowData[ key ], {unsafe: true}) }
         </StaticRouter>
       )
 
-      const appHtml = isDev
+      const appHtml = __DEV__
         ? ""
         : ReactDOMServer.renderToString(
             sheet.collectStyles(
@@ -111,7 +113,7 @@ html,body,#root {
     ${style}
   </head>
   <body>
-    <div id="root">${isDev ? "" : appHtml}</div>
+    <div id="root">${__DEV__ ? "" : appHtml}</div>
     ${files
       .map(file => {
         return `<script src="/${file}"></script>`
@@ -122,5 +124,6 @@ html,body,#root {
 
       fs.outputFileSync(targetPath, text)
     })
-  })
+  }
+  // })
 }

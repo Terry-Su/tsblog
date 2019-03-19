@@ -9,6 +9,7 @@ export default {
     title: 'TSBLOG'
   },
   entry: {
+    title       : "Site's Title",
     contents    : resolve( __dirname, "./contents" ),
     home        : resolve( __dirname, "./src/pages/Home" ),
     getPages,

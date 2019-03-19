@@ -1,7 +1,7 @@
 import fs from 'fs-extra'
 import path from 'path'
 
-import { isDev } from '../constants/global'
+import { __DEV__ } from '../global'
 import {
     PATH_APP_COMPONENT, PATH_BROWSER_COMPONENTS, PATH_CACHE, PATH_CACHE_ENTRY_COMPONENT
 } from '../paths'
@@ -30,13 +30,13 @@ const reduxStore = createStore( reducer )
 
 
 
-${ isDev ? 'const HotApp = hot( App )' : '' }
+${ __DEV__ ? 'const HotApp = hot( App )' : '' }
 loadable.preloadReady().then( () => 
-  ReactDOM.${isDev ? "render" : "hydrate"}(
+  ReactDOM.${__DEV__ ? "render" : "hydrate"}(
       ${
         enableRedux ? "<Provider store={ reduxStore }>" : ""
       }<BrowserRouter>
-        ${ isDev ? '<HotApp />' : '<App />' }
+        ${ __DEV__ ? '<HotApp />' : '<App />' }
       </BrowserRouter>${enableRedux ? "</Provider>" : ""},
     document.getElementById( 'root' )
   )

@@ -3,14 +3,14 @@ import { ReactLoadablePlugin } from 'react-loadable/webpack'
 import webpack from 'webpack'
 import WriteFilePlugin from 'write-file-webpack-plugin'
 
-import { isDev } from '../constants/global'
+import { __DEV__ } from '../global'
 import {
     PATH_CACHE_ENTRY_COMPONENT, PATH_PUBLIC, PATH_PUBLIC_LOADABLE, PATH_WEBPACK_TSCONFIG
 } from '../paths'
 import { Config } from '../typings'
 
 export default ( { entry }: Config ) => ( {
-  mode  : isDev ? "development" : "production",
+  mode  : __DEV__ ? "development" : "production",
   entry : PATH_CACHE_ENTRY_COMPONENT,
   output: {
     filename     : "bundle.js",
@@ -50,17 +50,23 @@ export default ( { entry }: Config ) => ( {
   },
   plugins: [
     // new webpack.HotModuleReplacementPlugin(),
-    new WriteFilePlugin(),
     new ReactLoadablePlugin( {
       filename: PATH_PUBLIC_LOADABLE
-    } )
+    } ),
+    ...(
+      __DEV__ ? [
+        new WriteFilePlugin()
+      ] : []
+    )
   ],
   // optimization: {
   //   splitChunks: {
   //     chunks: 'all'
   //   }
   // },
-  devtool: "inline-source-map"
+  ...( __DEV__ ? {
+    devtool: "inline-source-map"
+  } : {} )
   // optimization: {
   //   splitChunks: {
   //     cacheGroups: {

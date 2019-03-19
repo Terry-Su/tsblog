@@ -12,7 +12,6 @@ const Title = styled.h1`
 export default class Home extends Component {
   render() {
     const { title } = window[ NAME_GV_CURRENT_PAGE ].data.siteData
-    // console.log( window[ NAME_GV_CURRENT_PAGE ] )
     return <div>
       <Title>Title: { title }</Title>
     </div>
