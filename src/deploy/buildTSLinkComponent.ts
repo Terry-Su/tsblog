@@ -22,8 +22,9 @@ export default withRouter (
     history?: any
     className?: any
     style?: any
+    onClick?: any
   }> {
-    onClick = e => {
+    defaultOnClick = e => {
       e.preventDefault()
       const { to } = this.props
       const url = '/${NAME_PUBLIC_PAGE_DATA}/' + createFileNameOfPath( to ) + '.json'
@@ -34,6 +35,12 @@ export default withRouter (
         }
         this.props.history.push( to )
       } )
+    }
+    onClick = e => {
+      if ( this.props.onClick ) {
+        return this.props.onClick( e, this.defaultOnClick )
+      }
+      return this.defaultOnClick( e )
     }
     render() {
       const { children, to, className, style } = this.props
