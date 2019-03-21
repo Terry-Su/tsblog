@@ -52,7 +52,9 @@ window.${key}=${serializeJavascript(windowData[key], { unsafe: true })}
         getBoundingClientRect: () => ({})
       }
     }
-    global["location"] = undefined
+    global["location"] = {
+      pathname: path
+    }
 
     const { reduxApp, title = "" } = config.entry
     const useRedux = !!reduxApp
