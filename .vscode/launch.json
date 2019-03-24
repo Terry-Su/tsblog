@@ -11,7 +11,12 @@
       "args": [
         "node_modules/jasmine/bin/jasmine",
       ],
-      "runtimeArgs": ["-r", "ts-node/register"],
+      "runtimeArgs": [
+        "-r", 
+        "ts-node/register", 
+        "-r",
+        "tsconfig-paths/register",
+      ],
       "cwd": "${workspaceRoot}",
       "protocol": "inspector",
       "env": {

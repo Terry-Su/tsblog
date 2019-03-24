@@ -23,10 +23,10 @@ export default async function buildIndexHtmls(
   pages: PageInfo[],
   routes: TypeRoute[]
 ) {
-  for (const { path, data } of pages) {
+  for (const { path, data = {} } of pages) {
     // pages.map(({ path, data }) => {
     const targetPath = resolve(PATH_PUBLIC, `.${path}/index.html`)
-
+    const { siteTitle = '' } = data
     const windowData = {
       [NAME_GV_CURRENT_PAGE]: {
         path,
@@ -56,7 +56,7 @@ window.${key}=${serializeJavascript(windowData[key], { unsafe: true })}
       pathname: path
     }
 
-    const { reduxApp, title = "" } = config.entry
+    const { reduxApp, title,  } = config.entry
     const useRedux = !!reduxApp
     const reducer = useRedux ? require(reduxApp).default : {}
 
@@ -109,7 +109,7 @@ html,body,#root {
 <html>
   <head>
     <meta charset="utf-8"/>
-    <title>${title}</title>
+    <title>${title != null ? title : siteTitle}</title>
     ${globalScript}
     ${globalStyle}
     ${style}

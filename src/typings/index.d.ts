@@ -7,18 +7,18 @@ export type ConfigParser = {
 }
 
 export type ConfigEntry = {
-    title: string,
-    home: any
-    reduxApp?: Path
-    contents?: Path
-    static?: Path
-    getPages?: Function
-    setWebpack?: Function
-    tsconfigPath?: Path
-    // whether source files whose names start with '.'
-    dotFile?: boolean
-    // whether source directories whose names start with '.'
-    dotDirectory?: boolean
+  title?: string
+  home: any
+  reduxApp?: Path
+  contents?: Path
+  static?: Path
+  getPages?: Function
+  setWebpack?: Function
+  tsconfigPath?: Path
+  // whether source files whose names start with '.'
+  dotFile?: boolean
+  // whether source directories whose names start with '.'
+  dotDirectory?: boolean
 }
 
 export type Config = {
@@ -65,6 +65,7 @@ export interface PageInfo {
   path: string
   component: string
   data?: any
+  siteTitle?: any
 }
 
 // # route
