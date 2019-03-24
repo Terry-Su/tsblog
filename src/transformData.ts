@@ -31,7 +31,8 @@ function transformRemarks(
 ): TransformedMarkdownFile[] {
   const { contents } = config.entry
   const { remarks } = sourcedData
-  const { parser: configParser = {} } = config
+  const { parser: configParser = {}, preParser: configPreParser = {} } = config
+  const preParser = configPreParser[ ".md" ] 
   const defaultParser = text => {
     const converter = new showdown.Converter( { metadata: true } )
     const html = converter.makeHtml( text )
@@ -48,7 +49,10 @@ function transformRemarks(
     const extRegexp = new RegExp( `${PATH.extname( path )}$` )
     const relativePath = PATH.relative( contents, path ).replace( extRegexp, "" )
 
-    const text = fs.readFileSync( path, { encoding: "utf8" } )
+    let text = fs.readFileSync( path, { encoding: "utf8" } )
+    if ( preParser != null ) {
+      text = preParser( text )
+    }
 
     const getText = () => {
       return parser( text )

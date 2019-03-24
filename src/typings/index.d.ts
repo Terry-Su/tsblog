@@ -6,6 +6,10 @@ export type ConfigParser = {
   ".md": Function
 }
 
+export type ConfigPreParser = {
+  ".md": Function
+}
+
 export type ConfigEntry = {
   title?: string
   home: any
@@ -29,6 +33,7 @@ export type Config = {
   port?: number
 
   parser?: ConfigParser
+  preParser: ConfigPreParser
 }
 
 export interface SourcedData {
