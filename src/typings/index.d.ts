@@ -23,6 +23,8 @@ export type ConfigEntry = {
   dotFile?: boolean
   // whether source directories whose names start with '.'
   dotDirectory?: boolean
+  // watching file paths to rebuild page data and htmls
+  watching?: string[]
 }
 
 export type Config = {
@@ -33,7 +35,7 @@ export type Config = {
   port?: number
 
   parser?: ConfigParser
-  preParser: ConfigPreParser
+  preParser?: ConfigPreParser
 }
 
 export interface SourcedData {

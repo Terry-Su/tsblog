@@ -13,7 +13,8 @@ export default {
     contents    : resolve( __dirname, "./contents" ),
     home        : resolve( __dirname, "./src/pages/Home" ),
     getPages,
-    dotDirectory: false
+    dotDirectory: false,
+    watching    : [ resolve( __dirname, "testWatching/testWatching.js" ) ]
   },
 
   port: 3601

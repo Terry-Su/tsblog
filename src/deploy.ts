@@ -64,9 +64,10 @@ export async function deploy( getTransformedData: Function, config: Config ) {
   } )
 
   // # watch contents
-  const { contents } = config.entry
+  const { contents, watching = [] } = config.entry
   const contentsFiles = glob.sync( `${contents}/**/*` )
-  chokidar.watch( contentsFiles ).on( "change", async () => {
+  const watchingFiles = [ ...contentsFiles, ...watching ]
+  chokidar.watch( watchingFiles ).on( "change", async () => {
     // console.log( "contents changed" )
     // # re-generate website data
     const transformedData: TransformedData = await getTransformedData()

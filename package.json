@@ -71,6 +71,7 @@
     "to-vfile": "^5.0.2",
     "ts-loader": "^5.3.3",
     "ts-node": "^7.0.1",
+    "tsconfig-paths": "^3.8.0",
     "typescript": "^3.0.3",
     "typescript-eslint-parser": "^18.0.0",
     "unified": "^7.1.0",
