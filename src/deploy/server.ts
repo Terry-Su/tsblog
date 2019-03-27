@@ -1,6 +1,8 @@
 import browserSync from 'browser-sync'
 import express from 'express'
+import fs from 'fs'
 import path from 'path'
+import trash from 'trash'
 import webpack from 'webpack'
 import webpackDevServer from 'webpack-dev-server'
 
@@ -37,15 +39,22 @@ export function server( config: Config ) {
           console.log( `dev server: http://localhost:${port}` )
         } )
       }
-      if ( ! __DEV__ ) {
+      if ( !__DEV__ ) {
+        if ( fs.existsSync( PATH_PUBLIC ) ) {
+          trash( PATH_PUBLIC ).then( () => buildingWork() )
+        } else {
+          buildingWork()
+        }
+      }
+      function buildingWork() {
         const compiler = webpack( webpackConfig )
         compiler.hooks.done.tap( "tsblog", resolve )
-        compiler.watch( {}, ( err, stats ) => {
+        compiler.run( ( err, stats ) => {
           if ( err ) {
             console.error( err )
             return
           }
-    
+
           console.log(
             stats.toString( {
               chunks: false,
@@ -54,11 +63,11 @@ export function server( config: Config ) {
           )
         } )
 
-        browserSync.init( {
-          server: PATH_PUBLIC,
-          port,
-          open  : false,
-        } )
+        // browserSync.init( {
+        //   server: PATH_PUBLIC,
+        //   port,
+        //   open  : false,
+        // } )
       }
     } )
   )

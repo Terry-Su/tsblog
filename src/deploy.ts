@@ -9,6 +9,7 @@ import buildIndexHtmls from './deploy/buildIndexHtmls'
 import buildPageDatas from './deploy/buildPageDatas'
 import buildTSLinkComponent from './deploy/buildTSLinkComponent'
 import { server } from './deploy/server'
+import { __DEV__ } from './global'
 import { PATH_APP_COMPONENT, PATH_CACHE, PATH_CACHE_ENTRY_COMPONENT } from './paths'
 import { Config, SourcedData, TransformedData, TypeRoute } from './typings'
 
@@ -64,15 +65,17 @@ export async function deploy( getTransformedData: Function, config: Config ) {
   } )
 
   // # watch contents
-  const { contents, watching = [] } = config.entry
-  const contentsFiles = glob.sync( `${contents}/**/*` )
-  const watchingFiles = [ ...contentsFiles, ...watching ]
-  chokidar.watch( watchingFiles ).on( "change", async () => {
-    // console.log( "contents changed" )
-    // # re-generate website data
-    const transformedData: TransformedData = await getTransformedData()
-    const { pages, routes } = buildBasis( transformedData )
-    buildPageDatas( transformedData, config, pages )
-    buildIndexHtmls( transformedData, config, pages, routes )
-  } )
+  if ( __DEV__ ) {
+    const { contents, watching = [] } = config.entry
+    const contentsFiles = glob.sync( `${contents}/**/*` )
+    const watchingFiles = [ ...contentsFiles, ...watching ]
+    chokidar.watch( watchingFiles ).on( "change", async () => {
+      // console.log( "contents changed" )
+      // # re-generate website data
+      const transformedData: TransformedData = await getTransformedData()
+      const { pages, routes } = buildBasis( transformedData )
+      buildPageDatas( transformedData, config, pages )
+      buildIndexHtmls( transformedData, config, pages, routes )
+    } )
+  }
 }
