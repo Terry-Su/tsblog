@@ -15,11 +15,7 @@ export function server( config: Config ) {
   const { port = 8080, entry } = config
   const { setWebpack } = entry
 
-  const options = {
-    contentBase: PATH_PUBLIC,
-    hot        : false,
-    host       : "localhost"
-  }
+
 
   const webpackConfig = getWebpackConfig( config )
   return Promise.resolve(
@@ -29,6 +25,16 @@ export function server( config: Config ) {
       }
 
       if ( __DEV__ ) {
+        const { devServer = {} } = ( <any>webpackConfig )
+        const contentBase = [
+          PATH_PUBLIC,
+          ...( devServer.contentBase || [] )
+        ]
+        const options = {
+          contentBase,
+          hot : true,
+          host: "localhost"
+        }
         webpackDevServer.addDevServerEntrypoints( webpackConfig, options )
         const compiler = webpack( webpackConfig )
 

@@ -83,3 +83,5 @@ export type TypeRoute = {
   componentRelativePath: string
   componentAbsolutePath: string
 }
+
+

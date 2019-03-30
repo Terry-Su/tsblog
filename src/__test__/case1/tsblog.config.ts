@@ -6,7 +6,7 @@ const { resolve } = path
 
 export default {
   siteData: {
-    title: 'TSBLOG'
+    title: "TSBLOG"
   },
   entry: {
     title       : "Site's Title",
@@ -14,7 +14,17 @@ export default {
     home        : resolve( __dirname, "./src/pages/Home" ),
     getPages,
     dotDirectory: false,
-    watching    : [ resolve( __dirname, "testWatching/testWatching.js" ) ]
+    watching    : [ resolve( __dirname, "testWatching/testWatching.js" ) ],
+    setWebpack  : webpackConfig => {
+      webpackConfig.module.rules = [
+        {
+          test: /\.mdx$/,
+          use : [ "babel-loader", "@mdx-js/loader" ]
+        },
+        ...webpackConfig.module.rules,
+      ]
+    },
+    tsconfigPath: resolve( __dirname, 'tsconfig.json' )
   },
 
   port: 3601
@@ -24,23 +34,21 @@ function getPages( transformedData: TransformedData ): PageInfo[] {
   const { remarks, siteData } = transformedData
 
   const homePageInfo = {
-    path     : '/',
+    path     : "/",
     component: resolve( __dirname, "./src/pages/Home" ),
     data     : {
       siteData
     }
   }
-  const remarkPageInfos = remarks.map( ( { relativePath, getMetadata, getText } ) => ( {
-    path     : `/${ relativePath }`,
-    component: resolve( __dirname, "./src/template/RemarkTemplate" ),
-    data     : {
-      text    : getText(),
-      metadata: getMetadata()
-    }
-  } ) )
-  return [
-    homePageInfo,
-    ...remarkPageInfos,
-  ]
-
+  const remarkPageInfos = remarks.map(
+    ( { relativePath, getMetadata, getText } ) => ( {
+      path     : `/${relativePath}`,
+      component: resolve( __dirname, "./src/template/RemarkTemplate" ),
+      data     : {
+        text    : getText(),
+        metadata: getMetadata()
+      }
+    } )
+  )
+  return [ homePageInfo, ...remarkPageInfos ]
 }

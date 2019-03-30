@@ -21,7 +21,7 @@ export async function deploy( getTransformedData: Function, config: Config ) {
     const { getPages } = config.entry
 
     // ## run 'get pages'
-    const pages = getPages( transformedData ) || []
+    const pages = getPages( transformedData, config ) || []
 
     // # (Got in config)get home page component
 
