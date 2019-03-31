@@ -3,6 +3,7 @@ import { LiveEditor, LiveError, LivePreview, LiveProvider } from 'react-live'
 import styled from 'styled-components'
 
 import { NAME_GV_CURRENT_PAGE } from '../../../../constants/names'
+import ReactLiveMdxJS from './ReactLiveMdxJS'
 
 const Title = styled.h1`
   font-size: 1.5em;
@@ -16,11 +17,7 @@ export default class Home extends Component {
     return (
       <div>
         <Title>Title: {title}</Title>
-        <LiveProvider code="<strong>Hello World!</strong>">
-          <LiveEditor />
-          {/* <LiveError /> */}
-          <LivePreview />
-        </LiveProvider>
+        <ReactLiveMdxJS />
       </div>
     )
   }

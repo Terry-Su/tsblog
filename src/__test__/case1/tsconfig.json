@@ -8,6 +8,10 @@
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "lib": ["dom" ],
+    "typeRoots": [
+      "../../../node_modules/@types",
+      "./src/__typings__/**/*"
+    ],
     "esModuleInterop": true,
   }
 }

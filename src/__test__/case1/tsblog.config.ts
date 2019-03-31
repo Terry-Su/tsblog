@@ -17,14 +17,10 @@ export default {
     watching    : [ resolve( __dirname, "testWatching/testWatching.js" ) ],
     setWebpack  : webpackConfig => {
       webpackConfig.module.rules = [
-        {
-          test: /\.mdx$/,
-          use : [ "babel-loader", "@mdx-js/loader" ]
-        },
         ...webpackConfig.module.rules,
       ]
     },
-    tsconfigPath: resolve( __dirname, 'tsconfig.json' )
+    tsconfigPath: resolve( __dirname, "tsconfig.json" )
   },
 
   port: 3601

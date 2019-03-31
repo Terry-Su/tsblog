@@ -32,7 +32,7 @@ export function server( config: Config ) {
         ]
         const options = {
           contentBase,
-          hot : true,
+          // hot : true,
           host: "localhost"
         }
         webpackDevServer.addDevServerEntrypoints( webpackConfig, options )

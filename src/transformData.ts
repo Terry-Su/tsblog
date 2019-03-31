@@ -8,7 +8,7 @@ import {
     TransformedYamlFile
 } from './typings'
 
-const yamlParser = text => yaml.safeLoad( text )
+const yamlParser = text => yaml.load( text )
 
 const { resolve } = PATH
 // import remark from 'remark'
@@ -32,7 +32,7 @@ function transformRemarks(
   const { contents } = config.entry
   const { remarks } = sourcedData
   const { parser: configParser = {}, preParser: configPreParser = {} } = config
-  const preParser = configPreParser[ ".md" ] 
+  const preParser = configPreParser[ ".md" ]
   const defaultParser = text => {
     const converter = new showdown.Converter( { metadata: true } )
     const html = converter.makeHtml( text )
@@ -42,7 +42,9 @@ function transformRemarks(
   const remarkYamlParser = text => {
     const converter = new showdown.Converter( { metadata: true } )
     converter.makeHtml( text )
-    return converter.getMetadata()
+    const yamlText = converter.getMetadata( true )
+    const parsed = yamlParser( yamlText )
+    return parsed
   }
 
   const res = remarks.map( ( { path } ) => {
