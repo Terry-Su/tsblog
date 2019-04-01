@@ -56,12 +56,31 @@ function transformRemarks(
       text = preParser( text )
     }
 
+    const getSourceText = () => {
+      const text = fs.readFileSync( path, { encoding: "utf8" } )
+      return text
+    }
+
+    const getPreParsedText = () => {
+      let text = getSourceText()
+      if ( preParser != null ) {
+        text = preParser( text )
+      }
+      return text
+    }
+
     const getText = () => {
+      const text = getPreParsedText()
       return parser( text )
     }
-    const getMetadata = () => remarkYamlParser( text )
+    
+    const getMetadata = () => {
+      const text = getPreParsedText()
+      return remarkYamlParser( text )
+    }
     return {
       relativePath,
+      getSourceText,
       getText,
       getMetadata
     }

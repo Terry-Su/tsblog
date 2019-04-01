@@ -57,12 +57,12 @@ export async function deploy( getTransformedData: Function, config: Config ) {
   const { pages, routes } = buildBasis( transformedData )
 
   // # server
-  server( config ).then( () => {
+  // server( config ).then( () => {
     buildAfterServer( {
       pages,
       routes
     } )
-  } )
+  // } )
 
   // # watch contents
   if ( __DEV__ ) {

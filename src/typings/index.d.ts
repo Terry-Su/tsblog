@@ -57,6 +57,7 @@ export interface TransformedData
 export interface TransformedTextFile {
   relativePath: string
   getText: Function
+  getSourceText: Function
 }
 
 export interface TransformedMarkdownFile extends TransformedTextFile {
