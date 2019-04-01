@@ -8,7 +8,8 @@ import {
     TransformedYamlFile
 } from './typings'
 
-const yamlParser = text => yaml.load( text )
+// const yamlParser = text => yaml.load( text )
+const yamlParser = text => yaml.safeLoad( text )
 
 const { resolve } = PATH
 // import remark from 'remark'
