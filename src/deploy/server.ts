@@ -2,7 +2,6 @@ import browserSync from 'browser-sync'
 import express from 'express'
 import fs from 'fs'
 import path from 'path'
-import trash from 'trash'
 import webpack from 'webpack'
 import webpackDevServer from 'webpack-dev-server'
 
@@ -45,13 +44,7 @@ export function server( config: Config ) {
           console.log( `dev server: http://localhost:${port}` )
         } )
       }
-      if ( !__DEV__ ) {
-        if ( fs.existsSync( PATH_PUBLIC ) ) {
-          trash( PATH_PUBLIC ).then( () => buildingWork() )
-        } else {
-          buildingWork()
-        }
-      }
+      buildingWork()
       function buildingWork() {
         const compiler = webpack( webpackConfig )
         compiler.hooks.done.tap( "tsblog", resolve )

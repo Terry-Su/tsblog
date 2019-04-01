@@ -1,12 +1,20 @@
 import fs from 'fs'
 import NodeGit, { Repository } from 'nodegit'
+import trash from 'trash'
 
 import { deploy } from './deploy'
+import { __DEV__ } from './global'
+import { PATH_PUBLIC } from './paths'
 import { sourceData } from './sourceData'
 import { transformData } from './transformData'
 import { Config, Path } from './typings/index'
 
 export async function run( config: Config ) {
+  if ( !__DEV__ ) {
+    if ( fs.existsSync( PATH_PUBLIC ) ) {
+      await trash( PATH_PUBLIC )
+    } 
+  }
   const getSourcedData = () => sourceData( config )
   const getTransformedData = async () => {
     const sourcedData = getSourcedData()
