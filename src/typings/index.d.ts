@@ -73,7 +73,6 @@ export interface PageInfo {
   path: string
   component: string
   data?: any
-  siteTitle?: any
 }
 
 // # route

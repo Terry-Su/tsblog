@@ -25,7 +25,7 @@ export default async function buildIndexHtmls(
 ) {
   for (const { path, data = {} } of pages) {
     const targetPath = resolve(PATH_PUBLIC, `.${path}/index.html`)
-    const { siteTitle = "" } = data
+    const { siteTitle = "", siteMetaDescription="" } = data
     const windowData = {
       [NAME_GV_CURRENT_PAGE]: {
         path,
@@ -120,7 +120,10 @@ html,body,#root {
       const text = `<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8"/>
+    <meta charset="UTF-8">
+    <meta name="description" content="${siteMetaDescription}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>${title != null ? title : siteTitle}</title>
     ${globalScript}
     ${globalStyle}
