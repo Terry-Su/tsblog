@@ -58,7 +58,7 @@ const TSLink = loadable({
 ${importing
   .map(
     ( { componentName, componentRelativePath, path } ) =>
-      `const ${componentName} = loadable({
+      `export const ${componentName} = loadable({
         loader: () => import('${componentRelativePath}' /* webpackChunkName: "component-${createFileNameOfPath( path )}-${componentName}" */),
         loading: () => <StyledLoading></StyledLoading>,
         modules: ['${componentRelativePath}'],
