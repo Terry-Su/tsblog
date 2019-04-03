@@ -34,12 +34,21 @@ import ReactDOM from 'react-dom';
 import { Switch, withRouter } from 'react-router-dom'
 import { renderRoutes } from 'react-router-config'
 import loadable from 'react-loadable'
+import styled from 'styled-components'
 // import loadable from '${nodeModulesRelativePath}/react-loadable/babel'
 // const loadable = require( '${nodeModulesRelativePath}/react-loadable/babel' ).default
 
+
+
+const StyledLoading = styled.div\`
+  width: 100%;
+  height: 100%;
+  background: hsl(27, 39%, 95%);
+\`
+
 const TSLink = loadable({
   loader: () => import('./TSLink' /* webpackChunkName: "component-TSLink" */),
-  loading: () => <span></span>,
+  loading: () => <StyledLoading></StyledLoading>,
   modules: ['./TSLink'],
   webpack: () => [(require as any).resolveWeak('./TSLink')],
 });
@@ -51,7 +60,7 @@ ${importing
     ( { componentName, componentRelativePath, path } ) =>
       `const ${componentName} = loadable({
         loader: () => import('${componentRelativePath}' /* webpackChunkName: "component-${createFileNameOfPath( path )}-${componentName}" */),
-        loading: () => <span></span>,
+        loading: () => <StyledLoading></StyledLoading>,
         modules: ['${componentRelativePath}'],
         webpack: () => [(require as any).resolveWeak('${componentRelativePath}')],
       });
