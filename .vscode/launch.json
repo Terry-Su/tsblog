@@ -20,7 +20,7 @@
       "cwd": "${workspaceRoot}",
       "protocol": "inspector",
       "env": {
-        "NODE_ENV": "development"
+        // "DEV": "true"
       }
     }
 

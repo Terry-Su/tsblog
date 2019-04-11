@@ -10,7 +10,10 @@ import {
 import createFileNameOfPath from '../utils/createFileNameOfPath'
 
 export default function buildAppComponent( routes ) {
-  const browserComponentsRelativePath = path.relative( PATH_CACHE, PATH_BROWSER_COMPONENTS )
+  const browserComponentsRelativePath = path.relative(
+    PATH_CACHE,
+    PATH_BROWSER_COMPONENTS
+  )
 
   const nodeModulesRelativePath = path.relative( PATH_CACHE, PATH_NODE_MODULES )
 
@@ -27,9 +30,7 @@ export default function buildAppComponent( routes ) {
     return res
   } )()
 
-
-  const text = 
-`import React, { Component } from 'react';
+  const text = `import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Switch, withRouter } from 'react-router-dom'
 import { renderRoutes } from 'react-router-config'
@@ -59,7 +60,7 @@ ${importing
   .map(
     ( { componentName, componentRelativePath, path } ) =>
       `export const ${componentName} = loadable({
-        loader: () => import('${componentRelativePath}' /* webpackChunkName: "component-${createFileNameOfPath( path )}-${componentName}" */),
+        loader: () => import('${componentRelativePath}' /* webpackChunkName: "component-${componentName}" */),
         loading: () => <StyledLoading></StyledLoading>,
         modules: ['${componentRelativePath}'],
         webpack: () => [(require as any).resolveWeak('${componentRelativePath}')],
@@ -78,9 +79,9 @@ const browserRoutes = [
         // Update global window data
         const found = pagesData.filter( data => data.path === '${path}' )[ 0 ]
         if ( found ) {
-          window[ '${ NAME_GV_CURRENT_PAGE }' ] = found
+          window[ '${NAME_GV_CURRENT_PAGE}' ] = found
         } else {
-          pagesData.push( window[ '${ NAME_GV_CURRENT_PAGE }' ] )
+          pagesData.push( window[ '${NAME_GV_CURRENT_PAGE}' ] )
         }
           return <${componentName} />
         }, },`
@@ -93,16 +94,6 @@ class App extends Component<any> {
   onLinkMouseover = component => {
     component.preload()
   }
-
-
-  componentDidMount() {
-    this.props.history.listen( this.onRouteChange );
-  }
-
-  onRouteChange = ({ pathname }) => {
-    // console.log( 'route changed' ) 
-  }
-
 
   render() {
     return (

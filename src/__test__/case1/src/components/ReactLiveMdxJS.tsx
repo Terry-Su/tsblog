@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
 import { LiveEditor, LiveError, LivePreview, LiveProvider } from 'react-live'
 
-import { MDXTag } from '@mdx-js/tag'
+// import { MDXTag } from '@mdx-js/tag'
 
-const scope = { React, MDXTag, LiveProvider, LiveError, LivePreview }
+const scope = { React, 
+  
+  // MDXTag, 
+  LiveProvider, LiveError, LivePreview }
 
 const code: any = `
 const layoutProps = {
@@ -39,7 +42,7 @@ render(<LiveProvider noInline={true} code="render(<h1>Hello</h1>)">
 export default class ReactLiveMdxJS extends Component {
   render() {
     return (
-        <LiveProvider scope={scope} noInline={true} code={code}>
+        <LiveProvider scope={scope} noInline={true} code={'<h1>Hello2</h1>'}>
           {/* <LiveEditor /> */}
           <LiveError />
           <LivePreview

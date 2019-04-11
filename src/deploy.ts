@@ -58,10 +58,10 @@ export async function deploy( getTransformedData: Function, config: Config ) {
 
   // # server
   server( config ).then( () => {
-    buildAfterServer( {
+    setTimeout( () => buildAfterServer( {
       pages,
       routes
-    } )
+    } ), 0 )
   } )
 
   // # watch contents

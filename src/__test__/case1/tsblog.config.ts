@@ -12,6 +12,7 @@ export default {
     title       : "Site's Title",
     contents    : resolve( __dirname, "./contents" ),
     home        : resolve( __dirname, "./src/pages/Home" ),
+    static      : resolve( __dirname, "./static" ),
     getPages,
     dotDirectory: false,
     watching    : [ resolve( __dirname, "testWatching/testWatching.js" ) ],

@@ -25,7 +25,7 @@ export default async function buildIndexHtmls(
 ) {
   for (const { path, data = {} } of pages) {
     const targetPath = resolve(PATH_PUBLIC, `.${path}/index.html`)
-    const { siteTitle = "", siteMetaDescription="" } = data
+    const { siteTitle = "", siteMetaDescription = "" } = data
     const windowData = {
       [NAME_GV_CURRENT_PAGE]: {
         path,
@@ -66,7 +66,7 @@ window.${key}=${serializeJavascript(windowData[key], { unsafe: true })}
     let reducer
     if (!__DEV__) {
       useRedux = !!reduxApp
-      reducer = useRedux ? require(reduxApp).default: {}
+      reducer = useRedux ? require(reduxApp).default : {}
       App = require(PATH_CACHE_APP_COMPONENT).default
       ServerStyleSheet = require(PATH_TARGET_STYLED_COMPONENTS).ServerStyleSheet
       createStore = require(PATH_TARGET_REDUX).createStore
@@ -80,7 +80,7 @@ window.${key}=${serializeJavascript(windowData[key], { unsafe: true })}
       let appHtml = ""
       let style = ""
 
-      if ( ! __DEV__ ) {
+      if (!__DEV__) {
         const sheet = new ServerStyleSheet()
 
         const main = (
@@ -90,20 +90,19 @@ window.${key}=${serializeJavascript(windowData[key], { unsafe: true })}
             </Loadable.Capture>
           </StaticRouter>
         )
-  
-         appHtml = ReactDOMServer.renderToString(
-              sheet.collectStyles(
-                useRedux ? (
-                  <Provider store={createStore(reducer)}>{main}</Provider>
-                ) : (
-                  main
-                )
-              )
+
+        appHtml = ReactDOMServer.renderToString(
+          sheet.collectStyles(
+            useRedux ? (
+              <Provider store={createStore(reducer)}>{main}</Provider>
+            ) : (
+              main
             )
-          style = sheet.getStyleTags()
+          )
+        )
+        style = sheet.getStyleTags()
       }
-     
-      
+
       const globalStyle = `<style>
 html,body,#root {
   width: 100%;
@@ -116,7 +115,6 @@ html,body,#root {
       const bundles = getBundles(stats, modules)
       let files: string[] = bundles.map(({ file }) => file)
       files = files.filter((file, index) => files.indexOf(file) === index)
-
       const text = `<!DOCTYPE html>
 <html>
   <head>
@@ -125,7 +123,6 @@ html,body,#root {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>${title != null ? title : siteTitle}</title>
-    ${globalScript}
     ${globalStyle}
     ${style}
   </head>
@@ -136,6 +133,18 @@ html,body,#root {
         return `<script src="/${file}"></script>`
       })
       .join("\n")}
+  ${globalScript}
+  ${
+    __DEV__ ?  `
+    <script src="https://unpkg.com/@babel/standalone@7.4.3/babel.min.js"></script>
+    ` : `
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/styled-components/dist/styled-components.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.4.3/babel.min.js"></script>
+    ` 
+  }
+  
   <script type="text/javascript" src="/bundle.js"></script></body>
 </html>`
 
