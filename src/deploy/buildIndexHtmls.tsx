@@ -55,6 +55,10 @@ window.${key}=${serializeJavascript(windowData[key], { unsafe: true })}
       pathname: path
     }
 
+    if ( ! __DEV__ ) {
+      global["window"]["ReactDOMServer"] = ReactDOMServer
+    }
+
     const { reduxApp, title } = config.entry
     const Loadable = require(PATH_TARGET_REACT_LOADABLE)
 
@@ -136,7 +140,6 @@ html,body,#root {
   ${globalScript}
   ${
     __DEV__ ?  `
-    <script src="https://unpkg.com/@babel/standalone@7.4.3/babel.min.js"></script>
     ` : `
     <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>

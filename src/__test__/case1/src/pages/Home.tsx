@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 import loadable from 'react-loadable'
 import styled from 'styled-components'
 
 import { NAME_GV_CURRENT_PAGE } from '../../../../constants/names'
-import BabelComponent from '../components/BabelComponent'
+import Live from '../components/Live'
 
 const StyledLoading = styled.div`
   width: 100%;
@@ -24,13 +25,31 @@ const Title = styled.h1`
   color: palevioletred;
 `
 
+window[ 'ReactDOM' ] = ReactDOM
+
 export default class Home extends Component {
   render() {
     const { title } = window[NAME_GV_CURRENT_PAGE].data.siteData
     return (
       <div>
         <Title>Title: {title}</Title>
-        <BabelComponent />
+        <Live code={`
+class App extends React.Component {
+  state = { count: 0 }
+
+  onClick = () => {
+    this.setState( prevState => ({ count: prevState.count + 1 }) )
+  }
+
+  render() {
+    return <div>
+      <h1>{ this.state.count }</h1>
+      <button onClick={ this.onClick }>Click</button>
+    </div>
+  }
+}
+render(<App />)
+`}/>
       </div>
     )
   }

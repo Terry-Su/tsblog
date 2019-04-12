@@ -80,7 +80,6 @@ export default ( { entry }: Config ) => ( {
   } : {} ),
   externals: {
     ...( __DEV__ ? {
-      '@babel/standalone': 'Babel',
     } : {
       react              : 'React',
       'react-dom'        : 'ReactDOM',
