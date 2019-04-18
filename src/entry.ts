@@ -10,11 +10,11 @@ import { transformData } from './transformData'
 import { Config, Path } from './typings/index'
 
 export async function run( config: Config ) {
-  if ( !__DEV__ ) {
-    if ( fs.existsSync( PATH_PUBLIC ) ) {
-      await trash( PATH_PUBLIC )
-    } 
-  }
+  // if ( !__DEV__ ) {
+  //   if ( fs.existsSync( PATH_PUBLIC ) ) {
+  //     await trash( PATH_PUBLIC )
+  //   } 
+  // }
   const getSourcedData = () => sourceData( config )
   const getTransformedData = async () => {
     const sourcedData = getSourcedData()

@@ -1,4 +1,6 @@
 {
+  "include": ["./src/**/*.ts", "./src/**/*.tsx"],
+  "exclude": [ "node_modules/**/*", "**/*.js" ],
   "compilerOptions": {
     "module": "esnext",
 		"target": "esnext",
@@ -7,11 +9,12 @@
     "sourceMap": true,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
-    "lib": ["dom" ],
+    "lib": ["dom", "es2015", "es2016" ],
     "typeRoots": [
-      "../../../node_modules/@types",
+      "../../../node_modules/@types/**/*",
       "./src/__typings__/**/*"
     ],
     "esModuleInterop": true,
-  }
+    "skipLibCheck": true
+  },
 }

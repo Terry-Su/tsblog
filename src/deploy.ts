@@ -62,7 +62,6 @@ export async function deploy( getTransformedData: Function, config: Config ) {
       pages,
       routes
     } ), 0 )
-  } )
 
   // # watch contents
   if ( __DEV__ ) {
@@ -78,4 +77,7 @@ export async function deploy( getTransformedData: Function, config: Config ) {
       buildIndexHtmls( transformedData, config, pages, routes )
     } )
   }
+  } )
+
+  
 }

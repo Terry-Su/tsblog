@@ -1,4 +1,6 @@
+import CleanWebpackPlugin from 'clean-webpack-plugin'
 import CopyPlugin from 'copy-webpack-plugin'
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 import path from 'path'
 import { ReactLoadablePlugin } from 'react-loadable/webpack'
 import UglifyjsWebpackPlugin from 'uglifyjs-webpack-plugin'
@@ -24,22 +26,41 @@ export default ( { entry }: Config ) => ( {
   module: {
     rules: [
       {
-        test   : /\.ts*?/,
-        loader : "ts-loader",
+        test: /\.ts*?/,
+        use : [
+          // { loader: 'cache-loader', },
+          // {
+          //   loader : 'thread-loader',
+          //   options: {
+          //       // there should be 1 cpu for the fork-ts-checker-webpack-plugin
+          //       workers    : require( 'os' ).cpus().length - 1,
+          //       poolTimeout: Infinity // set this to Infinity in watch mode - see https://github.com/webpack-contrib/thread-loader
+          //   },
+          // },
+          {
+            loader : "ts-loader",
+            options: {
+              transpileOnly: true,
+              configFile   : entry.tsconfigPath || PATH_WEBPACK_TSCONFIG,
+              // happyPackMode: true, // IMPORTANT! use happyPackMode mode to speed-up compilation and reduce errors reported to webpack
+            }
+          }
+        ],
         exclude: /node_modules/,
-        options: {
-          configFile: entry.tsconfigPath || PATH_WEBPACK_TSCONFIG
-        }
+        
       },
       {
         test: /\.(js|jsx)$/,
-        use : {
-          loader : "babel-loader",
-          options: {
-            presets: [ "@babel/preset-env", "@babel/preset-react" ],
-            plugins: [ "@babel/plugin-proposal-class-properties" ]
+        use : [
+          { loader: 'cache-loader', },
+          {
+            loader : "babel-loader",
+            options: {
+              presets: [ "@babel/preset-env", "@babel/preset-react" ],
+              plugins: [ "@babel/plugin-proposal-class-properties" ]
+            },
           },
-        },
+        ],
         exclude: /node_modules/
       }
     ]
@@ -52,28 +73,32 @@ export default ( { entry }: Config ) => ( {
     // ]
   },
   plugins: [
-    // new webpack.HotModuleReplacementPlugin(),
-    new ReactLoadablePlugin( {
-      filename: PATH_PUBLIC_LOADABLE
-    } ),
-    new WriteFilePlugin(),
-    new CopyPlugin( [
-      ...(
-        entry.static != null ? [ {
-          from: entry.static,
-          to  : PATH_PUBLIC
-        } ] : [] 
-      )
-    ] ),
-    ...(
-      __DEV__ ? [
-      ] : [
-        new webpack.DefinePlugin( {
-          "process.env.NODE_ENV": JSON.stringify( "production" )
-        } ),
-        // new BundleAnalyzerPlugin(),
-      ]
-    )
+    new ForkTsCheckerWebpackPlugin( {
+      tsconfig: entry.tsconfigPath || PATH_WEBPACK_TSCONFIG,
+    } )
+    // // new webpack.HotModuleReplacementPlugin(),
+    // new ReactLoadablePlugin( {
+    //   filename: PATH_PUBLIC_LOADABLE
+    // } ),
+    // new WriteFilePlugin(),
+    // new CopyPlugin( [
+    //   ...(
+    //     entry.static != null ? [ {
+    //       from: entry.static,
+    //       to  : PATH_PUBLIC
+    //     } ] : [] 
+    //   )
+    // ] ),
+    // ...(
+    //   __DEV__ ? [
+    //   ] : [
+    //     new webpack.DefinePlugin( {
+    //       "process.env.NODE_ENV": JSON.stringify( "production" )
+    //     } ),
+    //     // new BundleAnalyzerPlugin(),
+    //     new CleanWebpackPlugin(),
+    //   ]
+    // )
   ],
   ...( __DEV__ ? {
     devtool: "inline-source-map"
