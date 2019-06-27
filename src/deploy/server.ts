@@ -14,8 +14,6 @@ export function server( config: Config ) {
   const { port = 8080, entry } = config
   const { setWebpack } = entry
 
-
-
   const webpackConfig = getWebpackConfig( config )
   return Promise.resolve(
     new Promise( resolve => {
@@ -31,8 +29,12 @@ export function server( config: Config ) {
         ]
         const options = {
           contentBase,
-          // hot : true,
-          host: "localhost"
+          hot             : true,
+          host            : "localhost",
+          watchContentBase: true,
+          watchOptions    : {
+            ignored: /\.js|node_modules/
+          }
         }
         webpackDevServer.addDevServerEntrypoints( webpackConfig, options )
         const compiler = webpack( webpackConfig )
@@ -43,9 +45,7 @@ export function server( config: Config ) {
         server.listen( port, "localhost", () => {
           console.log( `dev server: http://localhost:${port}` )
         } )
-      }
-      buildingWork()
-      function buildingWork() {
+      } else {
         const compiler = webpack( webpackConfig )
         compiler.hooks.done.tap( "tsblog", resolve )
         compiler.run( ( err, stats ) => {
@@ -53,7 +53,6 @@ export function server( config: Config ) {
             console.error( err )
             return
           }
-
           console.log(
             stats.toString( {
               chunks: false,
@@ -61,13 +60,8 @@ export function server( config: Config ) {
             } )
           )
         } )
-
-        // browserSync.init( {
-        //   server: PATH_PUBLIC,
-        //   port,
-        //   open  : false,
-        // } )
       }
+      
     } )
   )
 }

@@ -1,7 +1,16 @@
 {
-  "include": ["./src/**/*.ts", "./src/**/*.tsx"],
+  "include": ["../../src/**/*.ts", "../../src/**/*.tsx"],
   "exclude": [ "node_modules/**/*", "**/*.js" ],
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./*"
+      ],
+      "@src/*": [
+        "../../src/*"
+      ],
+    },
     "module": "esnext",
 		"target": "esnext",
 		"jsx": "react",
@@ -11,8 +20,8 @@
     "allowSyntheticDefaultImports": true,
     "lib": ["dom", "es2015", "es2016" ],
     "typeRoots": [
-      "../../../node_modules/@types/**/*",
-      "./src/__typings__/**/*"
+      "../../node_modules/@types/**/*",
+      "../../src/__typings__/**/*"
     ],
     "esModuleInterop": true,
     "skipLibCheck": true

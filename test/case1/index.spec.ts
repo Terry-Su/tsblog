@@ -1,4 +1,4 @@
-import { run } from '../../entry'
+import { run } from '../../src/entry'
 import config from './tsblog.config'
 
 // describe( "Test", () => {

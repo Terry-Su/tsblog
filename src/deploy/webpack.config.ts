@@ -1,6 +1,7 @@
 import CleanWebpackPlugin from 'clean-webpack-plugin'
 import CopyPlugin from 'copy-webpack-plugin'
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
+import HtmlWeabpckPlugin from 'html-webpack-plugin'
 import path from 'path'
 import { ReactLoadablePlugin } from 'react-loadable/webpack'
 import UglifyjsWebpackPlugin from 'uglifyjs-webpack-plugin'
@@ -28,15 +29,6 @@ export default ( { entry }: Config ) => ( {
       {
         test: /\.ts*?/,
         use : [
-          // { loader: 'cache-loader', },
-          // {
-          //   loader : 'thread-loader',
-          //   options: {
-          //       // there should be 1 cpu for the fork-ts-checker-webpack-plugin
-          //       workers    : require( 'os' ).cpus().length - 1,
-          //       poolTimeout: Infinity // set this to Infinity in watch mode - see https://github.com/webpack-contrib/thread-loader
-          //   },
-          // },
           {
             loader : "ts-loader",
             options: {
@@ -62,7 +54,15 @@ export default ( { entry }: Config ) => ( {
           },
         ],
         exclude: /node_modules/
-      }
+      },
+      //  {
+      //   test: /\.html$/,
+      //   use : [
+      //     {
+      //       loader: 'raw-loader'
+      //     }
+      //   ]
+      // }
     ]
   },
   resolve: {
@@ -75,30 +75,30 @@ export default ( { entry }: Config ) => ( {
   plugins: [
     new ForkTsCheckerWebpackPlugin( {
       tsconfig: entry.tsconfigPath || PATH_WEBPACK_TSCONFIG,
-    } )
-    // // new webpack.HotModuleReplacementPlugin(),
-    // new ReactLoadablePlugin( {
-    //   filename: PATH_PUBLIC_LOADABLE
-    // } ),
-    // new WriteFilePlugin(),
-    // new CopyPlugin( [
-    //   ...(
-    //     entry.static != null ? [ {
-    //       from: entry.static,
-    //       to  : PATH_PUBLIC
-    //     } ] : [] 
-    //   )
-    // ] ),
-    // ...(
-    //   __DEV__ ? [
-    //   ] : [
-    //     new webpack.DefinePlugin( {
-    //       "process.env.NODE_ENV": JSON.stringify( "production" )
-    //     } ),
-    //     // new BundleAnalyzerPlugin(),
-    //     new CleanWebpackPlugin(),
-    //   ]
-    // )
+    } ),
+    // new webpack.HotModuleReplacementPlugin(),
+    new ReactLoadablePlugin( {
+      filename: PATH_PUBLIC_LOADABLE
+    } ),
+    new WriteFilePlugin(),
+    new CopyPlugin( [
+      ...(
+        entry.static != null ? [ {
+          from: entry.static,
+          to  : PATH_PUBLIC
+        } ] : [] 
+      )
+    ] ),
+    ...(
+      __DEV__ ? [
+      ] : [
+        new webpack.DefinePlugin( {
+          "process.env.NODE_ENV": JSON.stringify( "production" )
+        } ),
+        // new BundleAnalyzerPlugin(),
+        new CleanWebpackPlugin(),
+      ]
+    )
   ],
   ...( __DEV__ ? {
     devtool: "inline-source-map"
@@ -112,40 +112,4 @@ export default ( { entry }: Config ) => ( {
       '@babel/standalone': 'Babel',
     } )
   }
-  // optimization: {
-  //   minimize : true,
-  //   minimizer: [
-  //     new UglifyjsWebpackPlugin( {
-  //       // chunkFilter: ( chunk ) => {
-  //       //   // Exclude uglification for the `vendor` chunk
-  //       //   if ( chunk.name.startsWith( 'vendor' ) ) {
-  //       //     return false
-  //       //   }
-          
-  //       //   return true
-  //       // }
-  //     } )
-  //   ],
-  //   splitChunks: {
-  //     chunks                : 'async',
-  //     minSize               : 30000,
-  //     maxSize               : 0,
-  //     minChunks             : 1,
-  //     maxAsyncRequests      : 5,
-  //     maxInitialRequests    : 3,
-  //     automaticNameDelimiter: '~',
-  //     name                  : true,
-  //     cacheGroups           : {
-  //       vendors: {
-  //         test    : /[\\/]node_modules[\\/]/,
-  //         priority: -10
-  //       },
-  //       default: {
-  //         minChunks         : 2,
-  //         priority          : -20,
-  //         reuseExistingChunk: true
-  //       }
-  //     }
-  //   }
-  // }
 } )

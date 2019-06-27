@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { NAME_GV_CURRENT_PAGE } from '../../../../constants/names'
+import { NAME_GV_CURRENT_PAGE } from '@src/constants/names'
 
 export default class RemarkTemplate extends Component {
   render() {
