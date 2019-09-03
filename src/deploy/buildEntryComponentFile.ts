@@ -21,7 +21,7 @@ import App from './App'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 ${enableRedux ? `
-import reducer from '${ path.relative( PATH_CACHE, reduxApp ) }'
+import reducer from '${ path.relative( PATH_CACHE, reduxApp ).replace( /\\/g, '/' ) }'
 
 const reduxStore = createStore( reducer )
 ` : ""}

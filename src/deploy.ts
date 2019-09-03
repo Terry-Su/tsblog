@@ -33,7 +33,7 @@ export async function deploy( getTransformedData: Function, config: Config ) {
         new RegExp( `${PATH.extname( component )}$` ),
         ""
       ),
-      componentRelativePath: PATH.relative( PATH_CACHE, component ),
+      componentRelativePath: PATH.relative( PATH_CACHE, component ).replace( /\\/g, '/' ),
       componentAbsolutePath: component
     } ) )
 

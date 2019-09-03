@@ -50,7 +50,7 @@ function transformRemarks(
 
   const res = remarks.map( ( { path } ) => {
     const extRegexp = new RegExp( `${PATH.extname( path )}$` )
-    const relativePath = PATH.relative( contents, path ).replace( extRegexp, "" )
+    const relativePath = PATH.relative( contents, path ).replace( /\\/g, '/' ).replace( extRegexp, "" )
 
     let text = fs.readFileSync( path, { encoding: "utf8" } )
     if ( preParser != null ) {
@@ -97,7 +97,7 @@ function transformYamls(
   const { yamls } = sourcedData
   const res = yamls.map( ( { path } ) => {
     const extRegexp = new RegExp( `${PATH.extname( path )}$` )
-    const relativePath = PATH.relative( contents, path ).replace( extRegexp, "" )
+    const relativePath = PATH.relative( contents, path ).replace( /\\/g, '/' ).replace( extRegexp, "" )
 
     const getData = () => {
       const text = fs.readFileSync( path, { encoding: "utf8" } )

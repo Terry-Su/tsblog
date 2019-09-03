@@ -1,6 +1,5 @@
 import fs from 'fs'
-import NodeGit, { Repository } from 'nodegit'
-import trash from 'trash'
+// import trash from 'trash'
 
 import { deploy } from './deploy'
 import { __DEV__ } from './global'

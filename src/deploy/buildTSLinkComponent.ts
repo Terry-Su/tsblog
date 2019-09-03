@@ -7,7 +7,7 @@ import { Config } from '../typings'
 import createFileNameOfPath from '../utils/createFileNameOfPath'
 
 export default function buildTSLinkComponent( routes, config: Config ) {
-  const utilsRelativePath = path.relative( PATH_CACHE, PATH_UTIL )
+  const utilsRelativePath = path.relative( PATH_CACHE, PATH_UTIL ).replace( /\\/g, '/' )
 
   const text = 
 `import fetch from 'isomorphic-fetch'

@@ -10,10 +10,6 @@ import {
 import createFileNameOfPath from '../utils/createFileNameOfPath'
 
 export default function buildAppComponent( routes ) {
-  const browserComponentsRelativePath = path.relative(
-    PATH_CACHE,
-    PATH_BROWSER_COMPONENTS
-  )
 
   const nodeModulesRelativePath = path.relative( PATH_CACHE, PATH_NODE_MODULES )
 
