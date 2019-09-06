@@ -11,9 +11,9 @@ class Props {
 
 class State {}
 
-declare const ReactDOMServer: any
+declare const $ReactDOMServer: any
 
-const isRunningNodeJS = window[ 'ReactDOMServer' ] != null
+const isRunningNodeJS = window[ '$ReactDOMServer' ] != null
 
 export default class Live extends Component<Props, State> {
   ref: any = React.createRef()
@@ -68,7 +68,7 @@ var ${key} = __$$__scope__$$__[ '${key}' ]`
         // # render function
         var render = ! isRunningNodeJS ? 
         element => ReactDOM.hydrate( element, dom ) :
-        element => { this.ssrHtml = window[ 'ReactDOMServer' ].renderToString( element ) };
+        element => { this.ssrHtml = window[ '$ReactDOMServer' ].renderToString( element ) };
 
         eval(declareScript + '\n' + output);
       })()

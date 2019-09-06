@@ -55,9 +55,9 @@ window.${key}=${serializeJavascript(windowData[key], { unsafe: true })}
       pathname: path
     }
 
-    if ( ! __DEV__ ) {
-      global["window"]["ReactDOMServer"] = ReactDOMServer
-    }
+    // if ( ! __DEV__ ) {
+      global["window"]["$ReactDOMServer"] = ReactDOMServer
+    // }
 
     const { reduxApp, title } = config.entry
     const Loadable = require(PATH_TARGET_REACT_LOADABLE)
