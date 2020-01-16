@@ -5,7 +5,7 @@ import path from 'path'
 import webpack from 'webpack'
 import webpackDevServer from 'webpack-dev-server'
 
-import { __DEV__ } from '../global'
+import { __DEV__, __SKIP_WEBPACK_COMPILE__ } from '../global'
 import { PATH_PUBLIC } from '../paths'
 import { Config } from '../typings'
 import getWebpackConfig from './webpack.config'
@@ -17,10 +17,19 @@ export function server( config: Config ) {
   const webpackConfig = getWebpackConfig( config )
   return Promise.resolve(
     new Promise( resolve => {
+      if ( __SKIP_WEBPACK_COMPILE__ ) {
+        const express = require( 'express' )
+        const app = express()
+        app.use( express.static( PATH_PUBLIC ) )
+        app.listen( config.port, () => {
+          console.log( `dev server: http://localhost:${port}` )
+        } )
+        resolve()
+        return
+      }
       if ( setWebpack ) {
         setWebpack( webpackConfig )
       }
-
       if ( __DEV__ ) {
         const { devServer = {} } = ( <any>webpackConfig )
         const contentBase = [
@@ -34,7 +43,8 @@ export function server( config: Config ) {
           watchContentBase: true,
           watchOptions    : {
             ignored: /\.js|node_modules/
-          }
+          },
+          open: true
         }
         webpackDevServer.addDevServerEntrypoints( webpackConfig, options )
         const compiler = webpack( webpackConfig )

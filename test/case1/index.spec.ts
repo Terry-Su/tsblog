@@ -14,7 +14,9 @@ describe( "long asynchronous specs", function() {
   } )
 
   it( "takes a long time", function( done ) {
-    run( config )
+    run( config ).then( () => {
+      done()
+    } )
   } )
 
   afterEach( function() {

@@ -21,6 +21,7 @@
       "protocol": "inspector",
       "env": {
         // "DEV": "true"
+        "TS_NODE_PROJECT": "test/case1/tsconfig.node.json"
       }
     }
 

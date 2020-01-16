@@ -48,20 +48,13 @@ export async function deploy( getTransformedData: Function, config: Config ) {
     }
   }
 
-  const buildAfterServer = ( { pages, routes } ) => {
+  const buildAfterServer = async ( { pages, routes } ) => {
     // # create static files based on pageInfos
     buildPageDatas( transformedData, config, pages )
-    buildIndexHtmls( transformedData, config, pages, routes )
+    await buildIndexHtmls( transformedData, config, pages, routes )
   }
 
   const { pages, routes } = buildBasis( transformedData )
-
-  // # server
-  server( config ).then( () => {
-    setTimeout( () => buildAfterServer( {
-      pages,
-      routes
-    } ), 0 )
 
   // # watch contents
   if ( __DEV__ ) {
@@ -77,6 +70,15 @@ export async function deploy( getTransformedData: Function, config: Config ) {
       buildIndexHtmls( transformedData, config, pages, routes )
     } )
   }
+
+  // # server
+  await server( config ).then( () => {
+    setTimeout( () => buildAfterServer( {
+      pages,
+      routes
+    } ), 0 )
+
+
   } )
 
   

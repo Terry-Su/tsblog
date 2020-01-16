@@ -32,7 +32,6 @@ export default class Home extends Component {
     const { title } = window[NAME_GV_CURRENT_PAGE].data.siteData
     return (
       <div>
-        123123123
         <Title>Title: {title}</Title>
         <Live code={`
 class App extends React.Component {

@@ -19,7 +19,7 @@ export async function run( config: Config ) {
     const sourcedData = getSourcedData()
     return await transformData( sourcedData, config )
   }
-  deploy( getTransformedData, config )
+  await deploy( getTransformedData, config )
 }
 
 

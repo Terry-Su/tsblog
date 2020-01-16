@@ -55,9 +55,9 @@ window.${key}=${serializeJavascript(windowData[key], { unsafe: true })}
       pathname: path
     }
 
-    // if ( ! __DEV__ ) {
+    if ( ! __DEV__ ) {
       global["window"]["$ReactDOMServer"] = ReactDOMServer
-    // }
+    }
 
     const { reduxApp, title } = config.entry
     const Loadable = require(PATH_TARGET_REACT_LOADABLE)
@@ -141,17 +141,21 @@ html,body,#root {
   ${
     __DEV__ ?  `
     ` : `
-    <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/styled-components/dist/styled-components.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone@7.4.3/babel.min.js"></script>
+    
+
     ` 
+    // <script type="text/javascript" src="https://unpkg.com/styled-components/dist/styled-components.min.js"></script>
+    // <script type="text/javascript" src="https://unpkg.com/@babel/standalone@7.4.3/babel.min.js"></script>
+    // <script crossorigin type="text/javascript" src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    // <script crossorigin type="text/javascript" src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
   }
   
   <script type="text/javascript" src="/bundle.js"></script></body>
 </html>`
 
       fs.outputFileSync(targetPath, text)
-    })
+    }).catch( err => {
+      console.log( err )
+    } )
   }
 }
