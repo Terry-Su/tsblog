@@ -136,10 +136,10 @@ html,body,#root {
     ${
       __DEV__ ?  `
       ` : `
-      <script type="text/javascript" src="https://unpkg.com/styled-components/dist/styled-components.min.js"></script>
       <script type="text/javascript" src="https://unpkg.com/@babel/standalone@7.4.3/babel.min.js"></script>
       <script crossorigin type="text/javascript" src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
       <script crossorigin type="text/javascript" src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+      <script src="https://unpkg.com/styled-components@4.0.0/dist/styled-components.min.js"></script>
       `}
     ${files
       .map(file => {
