@@ -106,10 +106,10 @@ export default ( { entry }: Config ) => ( {
   externals: {
     ...( __DEV__ ? {
     } : {
-      // react              : 'React',
-      // 'react-dom'        : 'ReactDOM',
-      // 'styled-components': 'styled',
-      // '@babel/standalone': 'Babel',
+      react              : 'React',
+      'react-dom'        : 'ReactDOM',
+      'styled-components': 'styled',
+      '@babel/standalone': 'Babel',
     } )
   }
 } )

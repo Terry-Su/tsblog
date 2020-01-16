@@ -72,14 +72,21 @@ export async function deploy( getTransformedData: Function, config: Config ) {
   }
 
   // # server
-  await server( config ).then( () => {
-    setTimeout( () => buildAfterServer( {
+  const shouldSkipServer = false
+  if (shouldSkipServer) {
+    buildAfterServer( {
       pages,
       routes
-    } ), 0 )
-
-
-  } )
+    } )
+  } else {
+    await server( config ).then( () => {
+      setTimeout( () => buildAfterServer( {
+        pages,
+        routes
+      } ), 0 )
+    } )
+  }
+  
 
   
 }

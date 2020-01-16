@@ -33,7 +33,7 @@ export default async function buildIndexHtmls(
       }
     }
     const globalScript = `
-<script>
+<script type="text/javascript">
 ${Object.keys(windowData).map(
   key =>
     `
@@ -132,25 +132,21 @@ html,body,#root {
   </head>
   <body>
     <div id="root">${__DEV__ ? "" : appHtml}</div>
+    ${globalScript}
+    ${
+      __DEV__ ?  `
+      ` : `
+      <script type="text/javascript" src="https://unpkg.com/styled-components/dist/styled-components.min.js"></script>
+      <script type="text/javascript" src="https://unpkg.com/@babel/standalone@7.4.3/babel.min.js"></script>
+      <script crossorigin type="text/javascript" src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+      <script crossorigin type="text/javascript" src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+      `}
     ${files
       .map(file => {
         return `<script src="/${file}"></script>`
       })
       .join("\n")}
-  ${globalScript}
-  ${
-    __DEV__ ?  `
-    ` : `
-    
-
-    ` 
-    // <script type="text/javascript" src="https://unpkg.com/styled-components/dist/styled-components.min.js"></script>
-    // <script type="text/javascript" src="https://unpkg.com/@babel/standalone@7.4.3/babel.min.js"></script>
-    // <script crossorigin type="text/javascript" src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
-    // <script crossorigin type="text/javascript" src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
-  }
-  
-  <script type="text/javascript" src="/bundle.js"></script></body>
+  </body>
 </html>`
 
       fs.outputFileSync(targetPath, text)
